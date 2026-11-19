@@ -53,7 +53,7 @@ def phrases(words, size):
     return out
 
 
-def write(words, length, path, cfg):
+def write(words, length, path, cfg, lang=None):
     """`words` are in clip time (0 = first frame). Writes `path`, returns it."""
     fill, active = _colour(cfg["cap_color"]), _colour(cfg["cap_active"])
     x, y = cfg["width"] // 2, int(cfg["height"] * cfg["cap_y"])
@@ -64,7 +64,9 @@ def write(words, length, path, cfg):
     for gi, group in enumerate(groups):
         texts = [_clean(w["w"]) for w in group]
         if cfg["cap_upper"]:
-            texts = [t.upper() for t in texts]
+            # Turkish/Azerbaijani: dotted i -> İ (str.upper() would give I)
+            dotted = (lang or "").lower() in ("tr", "az")
+            texts = [(t.replace("i", "İ") if dotted else t).upper() for t in texts]
         hard_stop = groups[gi + 1][0]["s"] if gi + 1 < len(groups) else length
         for wi, w in enumerate(group):
             start = max(0.0, w["s"])

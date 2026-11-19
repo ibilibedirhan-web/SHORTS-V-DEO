@@ -103,9 +103,9 @@ def make(index, pick, ctx, cfg, memory):
     if conf < 0.45:
         say(f"  weak sound match ({conf:.2f}); using the requested times, may be off by ~1 s", "warn")
 
-    words, _ = listen.transcribe(cfg["caption_model"], decode(part, 16000, offset, length),
-                                 ctx["language"])
-    ass = subs.write(words, length, clips_dir / f"{name}.ass", cfg)
+    words, lang = listen.transcribe(cfg["caption_model"], decode(part, 16000, offset, length),
+                                    ctx["language"])
+    ass = subs.write(words, length, clips_dir / f"{name}.ass", cfg, lang or ctx["language"])
     graph, look, seam = frame.plan(part, offset, length, info, cfg, memory, ctx.get("cam"))
 
     inputs = ["-ss", f"{offset:.3f}", "-t", f"{length:.3f}", "-i", str(part)]

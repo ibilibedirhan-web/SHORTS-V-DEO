@@ -1,6 +1,7 @@
 """yt-dlp wrappers. A stream is fetched as audio first; video only for the seconds that
 become clips, so a 6-hour stream costs a few hundred MB instead of many GB."""
 
+import os
 import shutil
 import time
 from pathlib import Path
@@ -71,7 +72,7 @@ def _finished(folder, stem):
 def audio(url, args, work, live=False):
     """The full audio track of the stream (reused between runs unless the stream is live)."""
     have = _finished(work, "audio")
-    if have and not live:
+    if have and (not live or os.environ.get("SC_REUSE_AUDIO")):
         say(f"reusing downloaded audio ({have[0].stat().st_size / 1e6:.0f} MB)", "good")
         return have[0]
     for old in work.glob("audio.*"):

@@ -79,7 +79,7 @@ def audio(url, args, work, live=False):
     say("downloading the audio track (video comes later, only for the clips)...", "step")
     extra = ["--live-from-start"] if live and "youtu" in url else []
     try:
-        run(["yt-dlp", *args, *extra, "-f", "ba/b", "-N", "4",
+        run(["yt-dlp", *args, *extra, "-f", "ba/wa/worst", "-N", "4",
              "-o", str(work / "audio.%(ext)s"), url], timeout=4 * 3600)
     except Problem as exc:
         raise friendly(exc, url) from None

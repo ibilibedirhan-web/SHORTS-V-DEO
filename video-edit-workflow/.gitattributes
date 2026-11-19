@@ -1,0 +1,18 @@
+# Varsayilan: metin dosyalari repoda LF
+* text=auto
+
+# Windows betikleri her zaman CRLF (LF ile .bat dosyalari acilip hemen kapanabiliyor)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Mac betikleri her zaman LF
+*.sh text eol=lf
+*.command text eol=lf
+
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.webm binary
+*.mp3 binary
+*.wav binary

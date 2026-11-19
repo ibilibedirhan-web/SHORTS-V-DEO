@@ -1,0 +1,29 @@
+node_modules/
+out/
+public/m/
+
+# kisisel / makineye ozel
+araclar/
+.venv/
+path-yedek.txt
+dikey.json
+katman.json
+sahne.json
+*.log
+
+# kullanici materyalleri (ornek video-1 haric)
+materyaller/*
+!materyaller/video-1
+materyaller/*/video/*
+!materyaller/*/video/.gitkeep
+
+# video-1 ornegine eklenen kisisel dosyalar (README ve .gitkeep haric)
+materyaller/video-1/materyal/**
+!materyaller/video-1/materyal/**/
+!materyaller/video-1/materyal/**/README.md
+
+# test/uretim json dosyalari
+dikey-*.json
+sahne-*.json
+katman-*.json
+!*.ornek.json

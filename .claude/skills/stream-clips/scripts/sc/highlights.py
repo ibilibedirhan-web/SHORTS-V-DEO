@@ -56,6 +56,8 @@ hashtags: 3-6 tags: the topic, the creator, one broad tag.
 score: 1-100, how likely a viewer watches to the end. Be strict: 80+ only for clips you \
 would bet money on.
 why: one short sentence.
+Write title and caption in the language the streamer speaks in the transcript (Turkish \
+stream -> Turkish title and caption), so they match the audience of that stream.
 
 TRANSCRIPT <<LO>>-<<HI>>:
 <<TEXT>>

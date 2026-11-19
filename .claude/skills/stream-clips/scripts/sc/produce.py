@@ -105,6 +105,8 @@ def make(index, pick, ctx, cfg, memory):
 
     words, lang = listen.transcribe(cfg["caption_model"], decode(part, 16000, offset, length),
                                     ctx["language"])
+    if not cfg.get("captions", True):
+        words = []
     ass = subs.write(words, length, clips_dir / f"{name}.ass", cfg, lang or ctx["language"])
     graph, look, seam = frame.plan(part, offset, length, info, cfg, memory, ctx.get("cam"))
 

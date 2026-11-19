@@ -43,6 +43,7 @@ DEFAULTS = {
     "title_top": 0.07,               # used when there is no facecam seam to sit on
 
     # captions
+    "captions": True,                # False = no word-by-word captions
     "cap_font": "Arial Black",
     "cap_size": 86,
     "cap_words": 3,

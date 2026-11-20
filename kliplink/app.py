@@ -104,10 +104,29 @@ def clips():
     return jsonify(clips=items, channel=ch)
 
 
+@app.get("/api/channel")
+def channel():
+    ch = re.sub(r"[^\w-]", "", request.args.get("channel", "eray").lower()) or "eray"
+    try:
+        with urllib.request.urlopen(urllib.request.Request(f"https://kick.com/api/v2/channels/{ch}", headers=UA),
+                                    timeout=30) as r:
+            j = json.load(r)
+    except Exception as e:
+        return jsonify(error=f"Kanal bulunamadı: {e}"), 404
+    ls = j.get("livestream") or {}
+    user = j.get("user") or {}
+    return jsonify(
+        slug=j.get("slug", ch), name=user.get("username") or ch, followers=int(j.get("followers_count") or 0),
+        avatar=user.get("profile_pic"), verified=bool(j.get("verified")),
+        live=bool(ls.get("is_live")), title=ls.get("session_title", ""), viewers=int(ls.get("viewer_count") or 0),
+        started=ls.get("start_time", ""), category=((ls.get("categories") or [{}])[0] or {}).get("name", ""),
+    )
+
+
 @app.get("/api/thumb")
 def thumb():
     url = request.args.get("u", "")
-    if not re.fullmatch(r"https://clips\.kick\.com/[\w/.-]+\.(webp|jpg|png)", url):
+    if not re.fullmatch(r"https://(clips\.kick\.com|files\.kick\.com)/[\w/.%-]+(\.(webp|jpg|jpeg|png))?(\?[\w=&.-]*)?", url):
         abort(400)
     try:
         with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20) as r:

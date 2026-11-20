@@ -126,6 +126,23 @@ code { background: var(--panel2); padding: 1px 6px; border-radius: 6px; border: 
 .card .acts { display: flex; gap: 8px; margin-top: auto; padding-top: 4px; }
 .card .acts button { flex: 1; justify-content: center; padding: 7px 8px; }
 
+/* ---------- kanal / canlı yayın ---------- */
+.chan { margin: 6px 0 18px; padding: 14px; background: var(--panel); border: 2px solid var(--ink); border-radius: 20px;
+  box-shadow: 5px 5px 0 var(--shadow); animation: rise .4s ease-out; }
+:root[data-theme="dark"] .chan { border-color: #2c2c2c; box-shadow: 5px 5px 0 #ffd40033; }
+.chan-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.chan .av { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); background: var(--panel2); }
+.chan .cn { font-family: "Bungee", sans-serif; font-size: 18px; color: var(--head); -webkit-text-stroke: .6px var(--ink); paint-order: stroke fill; }
+.chan .m { color: var(--muted); font-size: 13px; }
+.chan .live { margin-left: auto; background: #ff1f3d; color: #fff; font-weight: 800; padding: 6px 12px; border-radius: 999px;
+  border: 2px solid #000; box-shadow: 3px 3px 0 #000; animation: livepulse 1.4s ease-in-out infinite; }
+.chan .off { margin-left: auto; color: var(--muted); font-weight: 600; }
+@keyframes livepulse { 50% { box-shadow: 3px 3px 0 #000, 0 0 0 8px rgba(255, 31, 61, .25); } }
+.live-info { margin: 12px 0 10px; display: flex; flex-direction: column; gap: 2px; }
+.live-info b { font-size: 16px; }
+.player { position: relative; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; border: 3px solid var(--ink); background: #000; }
+.player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
 /* ---------- yükleme alanı ---------- */
 .drop { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
   min-height: 260px; border: 3px dashed var(--ink); border-radius: 24px; background: var(--panel); cursor: pointer; text-align: center; padding: 24px;
@@ -195,6 +212,8 @@ code { background: var(--panel2); padding: 1px 6px; border-radius: 6px; border: 
   .big, #dl-src { width: 100%; justify-content: center; }
   .box .h { width: 26px; height: 26px; right: -13px; bottom: -13px; }
   .phone { max-width: 300px; }
+  .chan .live, .chan .off { margin-left: 0; }
+  .chan-head .btn { width: 100%; justify-content: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {

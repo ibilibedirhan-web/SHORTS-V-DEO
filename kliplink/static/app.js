@@ -34,7 +34,8 @@ document.querySelectorAll(".tab").forEach((b) => (b.onclick = () => show(b.datas
 
 const setStatus = (el, msg, err) => { el.textContent = msg || ""; el.classList.toggle("err", !!err); };
 const fmtTime = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
-const fmtViews = (n) => (n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1) + "B" : String(n));
+const fmtViews = (n) => (n = +n || 0, n >= 1e6 ? (n / 1e6).toFixed(2).replace(".", ",") + " Mn"
+  : n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(".", ",") + "B" : String(n));
 async function api(url, opts) {
   const r = await fetch(url, opts);
   const j = await r.json().catch(() => ({}));
@@ -43,8 +44,30 @@ async function api(url, opts) {
 }
 
 // ---------- Kick clips ----------
+async function loadChannel(ch) {
+  const box = $("#chan");
+  try {
+    const c = await api("/api/channel?channel=" + encodeURIComponent(ch));
+    const since = c.started ? Math.max(0, Math.round((Date.now() - Date.parse(c.started.replace(" ", "T") + "Z")) / 60000)) : 0;
+    const dur = since >= 60 ? `${Math.floor(since / 60)} sa ${since % 60} dk` : `${since} dk`;
+    const avatar = c.avatar ? `<img class="av" src="/api/thumb?u=${encodeURIComponent(c.avatar)}" alt="">` : `<div class="av"></div>`;
+    box.innerHTML = `<div class="chan-head">${avatar}<div><div class="cn">${c.name}${c.verified ? " ✔" : ""}</div>
+        <div class="m">${fmtViews(c.followers)} takipçi</div></div>
+        ${c.live ? `<span class="live">🔴 CANLI · ${fmtViews(c.viewers)} izleyici</span>` : `<span class="off">Şu an yayında değil</span>`}
+        <a class="ghost btn" href="https://kick.com/${c.slug}" target="_blank" rel="noopener">Kick'te aç ↗</a></div>` +
+      (c.live ? `<div class="live-info"><b></b><span class="m"></span></div>
+        <div class="player"><iframe src="https://player.kick.com/${c.slug}?autoplay=true&muted=true" allowfullscreen
+          allow="autoplay; fullscreen; picture-in-picture" loading="lazy" title="Canlı yayın"></iframe></div>` : "");
+    if (c.live) {
+      box.querySelector(".live-info b").textContent = c.title;
+      box.querySelector(".live-info .m").textContent = `${c.category} · ${dur} önce başladı`;
+    }
+    box.hidden = false;
+  } catch (e) { box.hidden = true; }
+}
 async function loadClips() {
   const st = $("#status");
+  loadChannel($("#channel").value.trim());
   setStatus(st, "Klipler getiriliyor…");
   $("#grid").innerHTML = "";
   try {

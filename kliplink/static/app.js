@@ -309,8 +309,7 @@ $("#render").onclick = async () => {
       const j = await api("/api/job/" + job);
       if (j.status === "done") {
         setStatus(st, "Hazır ✔");
-        $("#result").innerHTML = `<h3>Sonuç</h3><video controls playsinline src="/api/out/${j.file}"></video>
-          <div class="row"><a class="primary btn" href="/api/out/${j.file}?dl=1" download>⬇︎ Videoyu indir</a></div>`;
+        showResult(j.file);
         break;
       }
       if (j.status === "error") throw new Error(j.step);
@@ -319,5 +318,54 @@ $("#render").onclick = async () => {
   } catch (e) { setStatus(st, "Hata: " + e.message, true); }
   btn.disabled = false;
 };
+
+// ---------- paylaşım ----------
+function makeCaption() {
+  const raw = $("#title").value.trim();
+  const plain = raw.replace(/[\[\]]/g, "").replace(/\s+/g, " ");
+  const name = ((raw.match(/\[([^\]]+)\]/) || [])[1] || (state.src && state.src.channel) || "").trim();
+  const tag = (t) => "#" + t.toLocaleLowerCase("tr").replace(/[^\p{L}\p{N}]+/gu, "");
+  const en = $("#lang").value === "en" && $("#caps").checked;
+  const tags = en ? ["#gta6", name && tag(name), "#gtavi", "#funny", "#gaming", "#kick"]
+                  : ["#gta6", name && tag(name), "#gta6türkiye", "#komik", "#kick", "#keşfet"];
+  const ask = en ? "Drop a 💀 if you'd do the same 👇" : "Sen olsan ne yapardın? 👇";
+  return `${plain}\n${ask}\n\n${[...new Set(tags.filter(Boolean))].join(" ")}`;
+}
+function showResult(file) {
+  const url = `/api/out/${file}`;
+  $("#result").innerHTML = `<h3>Sonuç</h3><video controls playsinline src="${url}"></video>
+    <h3>Paylaş</h3>
+    <label class="wide"><textarea id="caption" rows="5"></textarea></label>
+    <div class="row">
+      <button class="primary" id="share">📤 Paylaş (TikTok / Instagram / YouTube)</button>
+      <button class="ghost" id="copy">📋 Açıklamayı kopyala</button>
+      <a class="ghost btn" href="${url}?dl=1" download>⬇︎ Videoyu indir</a>
+    </div>
+    <p class="hint">“Paylaş” telefonun paylaşım menüsünü açar: uygulamayı seç, açıklama panoya kopyalanmış olur, yapıştırman yeterli.
+      YouTube'da başlık olarak açıklamanın ilk satırını kullan ve sonuna <code>#shorts</code> ekle.</p>
+    <div id="sstatus" class="status"></div>`;
+  $("#caption").value = makeCaption();
+  const copy = async () => {
+    try { await navigator.clipboard.writeText($("#caption").value); }
+    catch (e) { $("#caption").select(); document.execCommand("copy"); }
+    setStatus($("#sstatus"), "Açıklama kopyalandı ✔");
+  };
+  $("#copy").onclick = copy;
+  $("#share").onclick = async () => {
+    const st = $("#sstatus");
+    await copy();
+    try {
+      setStatus(st, "Video hazırlanıyor…");
+      const blob = await (await fetch(url)).blob();
+      const f = new File([blob], file, { type: "video/mp4" });
+      if (navigator.canShare && navigator.canShare({ files: [f] })) {
+        await navigator.share({ files: [f], text: $("#caption").value });
+        setStatus(st, "Paylaşım menüsü açıldı. Açıklama panoda, uygulamada yapıştır.");
+      } else {
+        setStatus(st, "Bu tarayıcı dosya paylaşımını desteklemiyor: videoyu indirip uygulamadan yükle. Açıklama panoda.", true);
+      }
+    } catch (e) { setStatus(st, e.name === "AbortError" ? "" : "Paylaşılamadı: " + e.message, e.name !== "AbortError"); }
+  };
+}
 
 loadClips();

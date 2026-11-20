@@ -4,21 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KLİPLİNK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/static/style.css">
 <script>
   try { const t = localStorage.getItem("kliplink-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
 </head>
 <body>
+<div class="bg" aria-hidden="true"><i class="glow g1"></i><i class="glow g2"></i><i class="grid"></i></div>
 <header>
-  <h1 class="logo">KLİPLİNK</h1>
+  <h1 class="logo" data-text="KLİPLİNK">KLİPLİNK</h1>
   <nav>
+    <span class="tab-ind" aria-hidden="true"></span>
     <button class="tab active" data-tab="kick">Kick Klipleri</button>
     <button class="tab" data-tab="upload">Video Yükle</button>
     <button class="tab" data-tab="editor" id="tab-editor" disabled>Düzenleyici</button>
   </nav>
   <button id="theme" class="ghost" title="Açık / koyu mod">🌙 Koyu</button>
 </header>
+<div class="ticker" aria-hidden="true"><div class="track">
+  <span>GTA 6 ★ KICK ★ VİRAL KLİP ★ 9:16 ★ %42 / %58 ★ ERAY ★ WTCN ★ HYPE ★ RRAENEE ★ KAI CENAT ★ ADIN ROSS ★ </span>
+  <span>GTA 6 ★ KICK ★ VİRAL KLİP ★ 9:16 ★ %42 / %58 ★ ERAY ★ WTCN ★ HYPE ★ RRAENEE ★ KAI CENAT ★ ADIN ROSS ★ </span>
+</div></div>
 
 <main>
   <!-- KICK -->

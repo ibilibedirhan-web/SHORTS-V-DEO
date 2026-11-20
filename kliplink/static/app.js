@@ -8,6 +8,7 @@ const state = { src: null, cam: [0, 0, 400, 300], game: [0, 0, 1000, 1080], clip
 function applyTheme(t) {
   document.documentElement.dataset.theme = t;
   $("#theme").textContent = t === "dark" ? "🌙 Koyu" : "☀️ Açık";
+  $("#theme").animate?.([{ transform: "rotate(-12deg) scale(.9)" }, { transform: "none" }], { duration: 300, easing: "ease-out" });
   try { localStorage.setItem("kliplink-theme", t); } catch (e) {}
 }
 applyTheme(document.documentElement.dataset.theme || "dark");
@@ -18,7 +19,17 @@ function show(tab) {
   document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
   document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("active", p.id === tab));
   if (tab === "editor") requestAnimationFrame(layoutBoxes);
+  requestAnimationFrame(moveInd);
 }
+function moveInd() {
+  const t = document.querySelector(".tab.active"), ind = document.querySelector(".tab-ind");
+  if (!t || !ind) return;
+  ind.style.left = t.offsetLeft + "px";
+  ind.style.width = t.offsetWidth + "px";
+}
+window.addEventListener("resize", moveInd);
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(moveInd);
+setTimeout(moveInd, 300);
 document.querySelectorAll(".tab").forEach((b) => (b.onclick = () => show(b.dataset.tab)));
 
 const setStatus = (el, msg, err) => { el.textContent = msg || ""; el.classList.toggle("err", !!err); };
@@ -49,9 +60,10 @@ function renderClips() {
   setStatus($("#status"), `${list.length} klip` + (rageOnly ? " (tepki / sinir)" : ""));
   const grid = $("#grid");
   grid.innerHTML = "";
-  for (const c of list) {
+  list.forEach((c, idx) => {
     const el = document.createElement("div");
     el.className = "card";
+    el.style.setProperty("--i", Math.min(idx, 16));
     el.innerHTML = `<div class="thumb"></div><div class="body"><div class="t"></div>
       <div class="m"></div><div class="acts"><button class="primary e">✂️ Düzenle</button><button class="d">⬇︎ İndir</button></div></div>`;
     const th = el.querySelector(".thumb");
@@ -62,7 +74,7 @@ function renderClips() {
     el.querySelector(".e").onclick = () => importClip(c, el, false);
     el.querySelector(".d").onclick = () => importClip(c, el, true);
     grid.appendChild(el);
-  }
+  });
 }
 async function importClip(c, card, download) {
   const btns = card.querySelectorAll("button");
@@ -295,7 +307,8 @@ $("#render").onclick = async () => {
   const start = +$("#start").value, end = +$("#end").value;
   if (end - start < 0.5) return setStatus(st, "Bitiş, başlangıçtan en az 0,5 sn sonra olmalı.", true);
   btn.disabled = true;
-  setStatus(st, "Video oluşturuluyor…");
+  st.classList.add("busy");
+  setStatus(st, "🎬 Video oluşturuluyor…");
   try {
     const body = {
       id: state.src.id, start, end, layout: $("#layout").value, cam: state.cam, game: state.game,
@@ -313,9 +326,10 @@ $("#render").onclick = async () => {
         break;
       }
       if (j.status === "error") throw new Error(j.step);
-      setStatus(st, "Video oluşturuluyor… (" + j.step + ")");
+      setStatus(st, "🎬 Video oluşturuluyor… (" + j.step + ")");
     }
   } catch (e) { setStatus(st, "Hata: " + e.message, true); }
+  st.classList.remove("busy");
   btn.disabled = false;
 };
 

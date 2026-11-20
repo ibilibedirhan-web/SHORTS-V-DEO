@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KLİPLİNK</title>
+<link rel="stylesheet" href="/static/style.css">
+<script>
+  try { const t = localStorage.getItem("kliplink-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+<header>
+  <h1 class="logo">KLİPLİNK</h1>
+  <nav>
+    <button class="tab active" data-tab="kick">Kick Klipleri</button>
+    <button class="tab" data-tab="upload">Video Yükle</button>
+    <button class="tab" data-tab="editor" id="tab-editor" disabled>Düzenleyici</button>
+  </nav>
+  <button id="theme" class="ghost" title="Açık / koyu mod">🌙 Koyu</button>
+</header>
+
+<main>
+  <!-- KICK -->
+  <section id="kick" class="panel active">
+    <h2>Kick Klipleri</h2>
+    <div class="row">
+      <label>Kanal <input id="channel" value="eray" spellcheck="false"></label>
+      <label>Zaman
+        <select id="time"><option value="day">Son 24 saat</option><option value="week" selected>Bu hafta</option>
+          <option value="month">Bu ay</option><option value="all">Tümü</option></select></label>
+      <label>Sıralama
+        <select id="sort"><option value="view">En çok izlenen</option><option value="date">En yeni</option></select></label>
+      <label class="check"><input type="checkbox" id="rageOnly"> Sadece 🔥 tepki / sinir anları</label>
+      <button id="load" class="primary">Klipleri getir</button>
+    </div>
+    <p class="hint">🔥 işareti başlığında sinir, kavga, bağırış ya da tamamı büyük harf olan klipleri gösterir. Çıplaklık içeren klipleri paylaşmadan önce kontrol et.</p>
+    <div id="status" class="status"></div>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <!-- UPLOAD -->
+  <section id="upload" class="panel">
+    <h2>Video Yükle</h2>
+    <label id="drop" class="drop">
+      <input type="file" id="file" accept="video/*" hidden>
+      <span>Videoyu buraya sürükle ya da <b>seçmek için tıkla</b></span>
+      <small>MP4, MOV, MKV… Yayın kaydı, Twitch/YouTube klibi, ne istersen.</small>
+    </label>
+    <div id="upstatus" class="status"></div>
+  </section>
+
+  <!-- EDITOR -->
+  <section id="editor" class="panel">
+    <h2 id="ed-title">Düzenleyici</h2>
+    <div class="editor">
+      <div class="left">
+        <div class="stage-wrap">
+          <div id="stage" class="stage">
+            <video id="video" playsinline preload="auto" crossorigin="anonymous"></video>
+            <div class="box cam" id="box-cam"><span>KAMERA</span><i class="h"></i></div>
+            <div class="box game" id="box-game"><span>OYUN</span><i class="h"></i></div>
+          </div>
+        </div>
+        <div class="row">
+          <button id="play" class="ghost">▶︎ Oynat</button>
+          <input type="range" id="seek" min="0" max="1" step="0.01" value="0">
+          <span id="time-now" class="mono">0.0</span>
+        </div>
+        <div class="row">
+          <button id="detect" class="primary">🎯 Kamerayı otomatik algıla</button>
+          <label>Düzen
+            <select id="layout"><option value="split">Bölünmüş — üst %42 kamera / alt %58 oyun</option>
+              <option value="blur">Tam kare (bulanık arka plan)</option></select></label>
+          <span id="detect-msg" class="hint"></span>
+        </div>
+        <p class="hint">Kutuları sürükle, sağ alt köşeden büyüt/küçült. Oranlar kilitli: kamera 1080×806, oyun 1080×1114.</p>
+
+        <h3>Kesim</h3>
+        <div class="row">
+          <label>Başlangıç <input type="number" id="start" step="0.1" min="0" value="0"></label>
+          <button class="ghost" id="set-start">⟵ şimdiki an</button>
+          <label>Bitiş <input type="number" id="end" step="0.1" min="0" value="0"></label>
+          <button class="ghost" id="set-end">⟵ şimdiki an</button>
+          <span class="mono" id="len"></span>
+        </div>
+        <p class="hint">Süreyi olay örgüsüne göre ayarla: kurulum → patlama → tepki. Çoğu klip 10-25 sn.</p>
+
+        <h3>Başlık</h3>
+        <label class="wide">Başlık metni <input id="title" placeholder="[Eray] GTA 6'da arabadan atladı, YÜZÜSTÜ kapaklandı 💀"></label>
+        <p class="hint">Köşeli parantez içindeki kelimeler, örneğin <code>[Eray]</code>, aşağıdaki renkte yazılır. Vurgu kelimelerini BÜYÜK yaz.</p>
+        <div class="row">
+          <label>İsim rengi <input type="color" id="accent" value="#e5004f"></label>
+          <div class="swatches">
+            <button data-c="#e5004f" title="Eray / Uzi">Eray</button>
+            <button data-c="#1e7bff" title="wtcN">wtcN</button>
+            <button data-c="#ff5a00" title="Hype / RRaenee">Hype</button>
+            <button data-c="#9146ff" title="Kai Cenat (Twitch)">Kai</button>
+            <button data-c="#00a82d" title="Adin Ross (Kick)">Adin</button>
+          </div>
+        </div>
+        <div class="row">
+          <label class="check"><input type="checkbox" id="barOn" checked> Platform şeridi</label>
+          <label>Yazı <input id="bar" value="KICK.COM/ERAY"></label>
+          <label>Renk <input type="color" id="barColor" value="#53fc18"></label>
+        </div>
+        <div class="row">
+          <label class="check"><input type="checkbox" id="caps"> Altyazı ekle</label>
+          <label>Dil <select id="lang"><option value="en">İngilizce</option><option value="tr">Türkçe</option></select></label>
+          <span class="hint">Türkçe konuşan yayıncılarda altyazı kapalı kalsın.</span>
+        </div>
+        <label class="wide">Dosya adı <input id="name" placeholder="eray-arabadan-atladi"></label>
+        <div class="row">
+          <button id="render" class="primary big">🎬 Videoyu oluştur</button>
+          <a id="dl-src" class="ghost btn" href="#" download>⬇︎ Orijinal klibi indir</a>
+        </div>
+        <div id="rstatus" class="status"></div>
+      </div>
+
+      <div class="right">
+        <h3>Önizleme 9:16</h3>
+        <div class="phone"><canvas id="preview" width="540" height="960"></canvas></div>
+        <div id="result"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

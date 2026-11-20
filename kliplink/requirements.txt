@@ -1,0 +1,6 @@
+flask>=3.0
+opencv-python-headless
+pillow
+numpy
+# isteğe bağlı (İngilizce altyazı için):
+# faster-whisper

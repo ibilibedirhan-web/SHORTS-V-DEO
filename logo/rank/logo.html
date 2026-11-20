@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Pricedown;src:url(pricedown.otf)}
+html,body{margin:0;background:transparent}svg{display:block}
+</style></head><body>
+<svg id="logo" width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#5b6bcb"/>
+    <stop offset="0.3" stop-color="#8a5fc6"/>
+    <stop offset="0.6" stop-color="#cf78c8"/>
+    <stop offset="0.82" stop-color="#ee95a6"/>
+    <stop offset="1" stop-color="#f9cb7c"/>
+  </linearGradient>
+  <clipPath id="c"><circle cx="512" cy="512" r="512"/></clipPath>
+  <path id="star" d="M0,-50 L14.7,-20.2 47.6,-15.5 23.8,7.7 29.4,40.5 0,25 -29.4,40.5 -23.8,7.7 -47.6,-15.5 -14.7,-20.2Z"/>
+  <g id="word" font-family="Pricedown" text-anchor="middle">
+    <text x="0" y="0" font-size="250">raynax</text>
+    <text x="0" y="255" font-size="215">RANK</text>
+  </g>
+  <g id="stars">
+    <use href="#star" transform="translate(375 -165) scale(0.6) rotate(12)"/>
+    <use href="#star" transform="translate(275 245) scale(0.6) rotate(-10)"/>
+    <use href="#star" transform="translate(325 200) scale(0.45) rotate(20)"/>
+  </g>
+</defs>
+<g CLIP>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <g transform="translate(508 450) scale(0.93)" stroke-linejoin="round" stroke-linecap="round">
+    <!-- drop shadow -->
+    <g transform="translate(-14 16)" fill="#000" stroke="#000" stroke-width="70"><use href="#word"/></g>
+    <!-- outer white border -->
+    <g fill="#fff" stroke="#fff" stroke-width="70"><use href="#word"/></g>
+    <!-- black outline -->
+    <g fill="#000" stroke="#000" stroke-width="38"><use href="#word"/></g>
+    <!-- inner -->
+    <g fill="#fff"><use href="#word"/></g>
+  </g>
+</g>
+</svg></body></html>

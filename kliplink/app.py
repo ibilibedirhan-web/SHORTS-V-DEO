@@ -28,10 +28,13 @@ for d in (SRC, OUT, WORK):
 sys.path.insert(0, str(HERE.parent / ".claude" / "skills" / "stream-clips" / "scripts"))
 from sc import titlecard  # noqa: E402
 
-W, H = 1080, 1920
-CAM_H = round(H * 0.42)          # 806 px  -> üst %42 kamera
-GAME_H = H - CAM_H               # 1114 px -> alt %58 oyun
-BAR_H = 70
+# Çıkış genişliği: bilgisayarda 1080 (1080x1920). Zayıf ücretsiz sunucularda OUT_W=720 ile 720x1280.
+W = int(os.environ.get("OUT_W", 1080)) // 2 * 2
+H = round(W * 16 / 9 / 2) * 2
+K = W / 1080                     # tüm yazı/şerit ölçüleri bu oranla küçülür
+CAM_H = round(H * 0.42)          # üst %42 kamera  (1080'de 806 px)
+GAME_H = H - CAM_H               # alt %58 oyun    (1080'de 1114 px)
+BAR_H = round(70 * K)
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131 Safari/537.36"}
 RAGE = re.compile(r"(sinir|rage|kriz|çıldır|cildir|delir|bağır|bagir|kavga|küfür|kufur|noluyo|ne oluyo|amk|aq|"
                   r"yuh|ban|kopt|patla|şok|sok|olamaz|lan\b|!{2,})", re.I)
@@ -294,16 +297,17 @@ def bold_font():
 def make_bar(text, color, path):
     from PIL import Image, ImageDraw, ImageFont
     font = bold_font()
-    f1 = ImageFont.truetype(font, 46) if font else ImageFont.load_default(46)
-    f2 = ImageFont.truetype(font, 34) if font else ImageFont.load_default(34)
+    f1 = ImageFont.truetype(font, round(46 * K)) if font else ImageFont.load_default(round(46 * K))
+    f2 = ImageFont.truetype(font, round(34 * K)) if font else ImageFont.load_default(round(34 * K))
     text = text.upper()
     word = text.split(".")[0]
     im = Image.new("RGBA", (W, BAR_H), (0, 0, 0, 255))
     d = ImageDraw.Draw(im)
     w1, w2 = d.textlength(word, font=f1), d.textlength(text, font=f2)
-    x = (W - w1 - 28 - w2) / 2
+    gap = 28 * K
+    x = (W - w1 - gap - w2) / 2
     d.text((x, BAR_H / 2), word, font=f1, fill=color, anchor="lm")
-    d.text((x + w1 + 28, BAR_H / 2 + 1), text, font=f2, fill="white", anchor="lm")
+    d.text((x + w1 + gap, BAR_H / 2 + 1), text, font=f2, fill="white", anchor="lm")
     im.save(path)
 
 
@@ -314,7 +318,8 @@ def captions_ass(src, start, length, lang, path):
     except ImportError:
         raise RuntimeError("Altyazı bu sunucuda kurulu değil (faster-whisper yok). Altyazıyı kapatıp tekrar dene.")
     cfg = settings.load()
-    cfg.update(cap_words=2, cap_size=92, cap_y=0.76, cap_font="Inter Black", cap_outline=8)
+    cfg.update(cap_words=2, cap_size=round(92 * K), cap_y=0.76, cap_font="Inter Black", cap_outline=max(2, round(8 * K)),
+               width=W, height=H)
     pcm = subprocess.run(["ffmpeg", "-v", "error", "-ss", str(start), "-t", str(length), "-i", str(src),
                           "-ac", "1", "-ar", "16000", "-f", "f32le", "-"], capture_output=True, check=True).stdout
     words, lg = listen.transcribe("base", np.frombuffer(pcm, dtype=np.float32), lang or None)
@@ -355,14 +360,14 @@ def render_job(jid, p):
             make_bar(p["bar"], p.get("bar_color", "#53FC18"), work / "bar.png")
             inputs += ["-i", str(work / "bar.png")]
             g += f"[{last}][{n}:v]overlay=0:{seam}[v2];"
-            last, n, title_y = "v2", n + 1, seam + BAR_H + 12
+            last, n, title_y = "v2", n + 1, seam + BAR_H + round(12 * K)
         if p.get("title", "").strip():
-            cfg = {"title_size": 56, "title_bg": "FFFFFF", "title_fg": "111111", "width": W,
+            cfg = {"title_size": round(56 * K), "title_bg": "FFFFFF", "title_fg": "111111", "width": W,
                    "title_font_file": None, "title_accent": p.get("accent", "#E5004F").lstrip("#")}
             titlecard.render(p["title"].strip(), cfg, work / "title.png")
             inputs += ["-i", str(work / "title.png")]
             ty = f"{title_y}" if title_y is not None else f"{seam}-h/2"
-            g += f"[{n}:v]scale='min(iw,1000)':-1[t];[{last}][t]overlay=(W-w)/2:{ty}[v3];"
+            g += f"[{n}:v]scale='min(iw,{round(1000 * K)})':-1[t];[{last}][t]overlay=(W-w)/2:{ty}[v3];"
             last, n = "v3", n + 1
         g += f"[{last}]null[vout]"
         name = re.sub(r"[^\w-]+", "-", p.get("name") or sid).strip("-")[:50] or sid

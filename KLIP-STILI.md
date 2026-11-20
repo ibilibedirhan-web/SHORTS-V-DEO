@@ -31,3 +31,12 @@ Instagram, TikTok ve YouTube Shorts için yayıncı klipleri. Bu kurallar her ye
 ## Araç
 `.claude/skills/stream-clips/scripts/viral.py <spec.json> <kaynak_klasör> <çıkış_klasör>`
 spec alanları: name, src, start, end, cam [x,y,w,h], lang, title, accent, bar, layout, game_x.
+
+## Hesaplar ve yayınlama (vidIQ üzerinden bağlı)
+- TikTok: Raynax Clips — herkese açık, yorumlar açık (müzik kullanım onayı verildi).
+- Instagram: @raynaxclips (profesyonel hesap).
+- YouTube: @raynaxclips — kullanıcı kendisi planlı paylaşıyor; şimdilik **yabancı yayıncı** içerikleri buraya.
+- Kullanıcının kendi paylaştığı videolara dokunma; her yayından önce taslağı göster, onay al.
+
+## KLİPLİNK sitesi
+- Canlı: https://shorts-v-deo.onrender.com (Render ücretsiz, 512 MB) — orada çıktı 720x1280 (`OUT_W=720`).

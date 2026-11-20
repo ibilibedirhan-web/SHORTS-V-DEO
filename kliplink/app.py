@@ -307,7 +307,11 @@ def make_bar(text, color, path):
 
 
 def captions_ass(src, start, length, lang, path):
-    from sc import listen, settings, subs
+    try:
+        from sc import listen, settings, subs
+        import faster_whisper  # noqa: F401
+    except ImportError:
+        raise RuntimeError("Altyazı bu sunucuda kurulu değil (faster-whisper yok). Altyazıyı kapatıp tekrar dene.")
     cfg = settings.load()
     cfg.update(cap_words=2, cap_size=92, cap_y=0.76, cap_font="Inter Black", cap_outline=8)
     pcm = subprocess.run(["ffmpeg", "-v", "error", "-ss", str(start), "-t", str(length), "-i", str(src),

@@ -40,6 +40,7 @@ DEFAULTS = {
     "title_size": 56,
     "title_bg": "FFFFFF",
     "title_fg": "111111",
+    "title_accent": "E5004F",        # colour for [bracketed] words in the title, e.g. the streamer's name
     "title_top": 0.07,               # used when there is no facecam seam to sit on
 
     # captions

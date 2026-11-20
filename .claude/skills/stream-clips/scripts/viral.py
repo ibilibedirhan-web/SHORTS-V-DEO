@@ -1,6 +1,8 @@
 """Render short viral-style 9:16 clips from 16:9 stream clips.
 usage: python viral.py <spec.json> <src_dir> <out_dir>
-spec: [{name, src, start, end, cam:[x,y,w,h] (px in 1920x1080), lang, title}]"""
+spec: [{name, src, start, end, cam:[x,y,w,h] (px in 1920x1080), lang, title, accent?, captions?}]
+title: put the streamer's name in [brackets] to colour it with `accent` (hex).
+captions default to on, except for Turkish (lang "tr") streams, which get none."""
 import json, subprocess, sys
 from pathlib import Path
 
@@ -21,10 +23,12 @@ for c in spec:
                           str(src_dir / c["src"]), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
                          capture_output=True, check=True).stdout
     import numpy as np
-    words, lang = listen.transcribe("base", np.frombuffer(pcm, dtype=np.float32), c["lang"])
+    want_caps = c.get("captions", c["lang"] != "tr")
+    words, lang = (listen.transcribe("base", np.frombuffer(pcm, dtype=np.float32), c["lang"])
+                   if want_caps else ([], c["lang"]))
     ass = subs.write(words, length, tmp / "subs.ass", cfg, lang or c["lang"])
     title = tmp / "title.png"
-    titlecard.render(c["title"], cfg, title)
+    titlecard.render(c["title"], {**cfg, "title_accent": c.get("accent", cfg["title_accent"])}, title)
 
     x, y, w, h = c["cam"]
     top = min(round(W * h / w / 2) * 2, 760)

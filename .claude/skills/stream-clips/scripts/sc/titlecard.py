@@ -66,23 +66,30 @@ class _Emoji:
 
 
 def _tokens(text):
-    """Split into words; each word into ('t', text) and ('e', emoji) pieces."""
-    out = []
+    """Split into words; each word into ('t', text, accent) and ('e', emoji, accent) pieces.
+    Words inside [square brackets] are accent-coloured (e.g. the streamer's name)."""
+    out, accent = [], False
     for word in text.split():
+        if word.startswith("["):
+            accent, word = True, word[1:]
+        closes = "]" in word
+        word = word.replace("]", "")
         pieces, buf = [], ""
         for ch in word:
             if _is_emoji(ch):
                 if buf:
-                    pieces.append(("t", buf))
+                    pieces.append(("t", buf, accent))
                     buf = ""
                 if ch not in ("‍", "️"):
-                    pieces.append(("e", ch))
+                    pieces.append(("e", ch, accent))
             elif unicodedata.category(ch) != "Cf":
                 buf += ch
         if buf:
-            pieces.append(("t", buf))
+            pieces.append(("t", buf, accent))
         if pieces:
             out.append(pieces)
+        if closes:
+            accent = False
     return out
 
 
@@ -108,7 +115,7 @@ def render(text, cfg, path):
     limit = cfg["width"] - 2 * int(cfg["width"] * 0.11) - 2 * pad_x
     lines, cur, cur_w = [], [], 0.0
     for word in words:
-        w = sum(piece_width(k, v) for k, v in word)
+        w = sum(piece_width(k, v) for k, v, _ in word)
         if not w:
             continue
         extra = w + (space if cur else 0)
@@ -130,6 +137,7 @@ def render(text, cfg, path):
     draw.rounded_rectangle((8, 10, box_w + 8, box_h + 10), radius=int(size * 0.32), fill=(0, 0, 0, 70))
     draw.rounded_rectangle((0, 0, box_w, box_h), radius=int(size * 0.32), fill=_hex(cfg["title_bg"]))
     ink = _hex(cfg["title_fg"])
+    accent_ink = _hex(cfg.get("title_accent", "E5004F"))
     ascent = font.getmetrics()[0]
     for row, (line, width) in enumerate(lines):
         x = (box_w - width) / 2
@@ -138,9 +146,9 @@ def render(text, cfg, path):
         for wi, word in enumerate(line):
             if wi:
                 x += space
-            for kind, value in word:
+            for kind, value, acc in word:
                 if kind == "t":
-                    draw.text((x, baseline), value, font=font, fill=ink, anchor="ls")
+                    draw.text((x, baseline), value, font=font, fill=accent_ink if acc else ink, anchor="ls")
                     x += font.getlength(value)
                 elif glyphs.get(value) is not None:
                     g = glyphs[value]

@@ -126,6 +126,7 @@ function openEditor(meta) {
   setStatus($("#rstatus"), "");
   updateLen();
   show("editor");
+  window.scrollTo(0, 0);
   detect();
 }
 

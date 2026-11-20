@@ -81,3 +81,26 @@ code { background: var(--panel2); padding: 1px 5px; border-radius: 5px; }
   .right { position: static; }
   .phone { margin: 0 auto; }
 }
+
+/* ---- telefon ---- */
+html, body { overflow-x: hidden; }
+input, select { max-width: 100%; min-width: 0; }
+@media (max-width: 700px) {
+  header { position: static; padding: 10px 12px; gap: 8px; }
+  .logo { font-size: 22px; }
+  #theme { margin-left: auto; padding: 6px 10px; }
+  nav { order: 3; width: 100%; flex: 1 1 100%; flex-wrap: nowrap; overflow-x: auto; }
+  nav .tab { flex: 1; justify-content: center; white-space: nowrap; padding: 8px 10px; font-size: 14px; }
+  main { padding: 14px 12px 60px; }
+  h2 { font-size: 20px; }
+  .row { gap: 8px; }
+  .row label { flex-wrap: wrap; }
+  #channel, #bar { width: 100%; }
+  .row > label:has(#channel), .row > label:has(#bar) { flex: 1 1 100%; }
+  .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card .body { padding: 8px; } .card .t { font-size: 13px; } .card .m { font-size: 11px; }
+  .card .acts { flex-direction: column; }
+  .big { width: 100%; justify-content: center; }
+  #dl-src { width: 100%; justify-content: center; }
+  .box .h { width: 26px; height: 26px; right: -13px; bottom: -13px; }
+}

@@ -29,6 +29,18 @@ for c in spec:
     ass = subs.write(words, length, tmp / "subs.ass", cfg, lang or c["lang"])
     title = tmp / "title.png"
     titlecard.render(c["title"], {**cfg, "title_accent": c.get("accent", cfg["title_accent"])}, title)
+    bar = tmp / "bar.png"
+    if c.get("bar"):        # e.g. "KICK.COM/ERAY": black strip under the cam, platform word in its colour
+        from PIL import Image, ImageDraw, ImageFont
+        f1 = ImageFont.truetype("/usr/share/fonts/opentype/inter/Inter-Black.otf", 46)
+        f2 = ImageFont.truetype("/usr/share/fonts/opentype/inter/Inter-Black.otf", 34)
+        word = c["bar"].split(".")[0]
+        im = Image.new("RGBA", (W, 70), (0, 0, 0, 255)); d = ImageDraw.Draw(im)
+        w1, w2 = d.textlength(word, font=f1), d.textlength(c["bar"], font=f2)
+        x = (W - w1 - 28 - w2) / 2
+        d.text((x, 35), word, font=f1, fill=c.get("bar_color", "#53FC18"), anchor="lm")
+        d.text((x + w1 + 28, 36), c["bar"], font=f2, fill="white", anchor="lm")
+        im.save(bar)
 
     x, y, w, h = c["cam"]
     top = min(round(W * h / w / 2) * 2, 760)
@@ -45,10 +57,12 @@ for c in spec:
         stack = (f"[0:v]crop={w}:{ch}:{x}:{cy},scale={W}:{top}[cam];"
                  f"[0:v]crop={gw}:1080:{gx}:0,scale={W}:{gh}[game];[cam][game]vstack[st];")
     graph = (stack + f"[st]ass={ass.name}[sub];"
-             f"[1:v]scale='min(iw,1000)':-1[t];[sub][t]overlay=(W-w)/2:{top}-h/2[v]")
+             + (f"[2:v]null[b];[sub][b]overlay=0:{top}[sb];[1:v]scale='min(iw,1000)':-1[t];"
+                f"[sb][t]overlay=(W-w)/2:{top}+70+12[v]" if c.get("bar") else
+                f"[1:v]scale='min(iw,1000)':-1[t];[sub][t]overlay=(W-w)/2:{top}-h/2[v]"))
     out = out_dir / f"{name}.mp4"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(c["start"]), "-t", str(length),
-                    "-i", str(src_dir / c["src"]), "-i", str(title), "-filter_complex", graph,
+                    "-i", str(src_dir / c["src"]), "-i", str(title)] + (["-i", str(bar)] if c.get("bar") else []) + ["-filter_complex", graph,
                     "-map", "[v]", "-map", "0:a", "-c:v", "libx264", "-crf", "19", "-preset", "medium",
                     "-r", "30", "-c:a", "aac", "-b:a", "192k", "-af", "loudnorm=I=-14:TP=-1",
                     "-movflags", "+faststart", str(out)], cwd=tmp, check=True)

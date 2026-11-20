@@ -143,7 +143,8 @@ def upload():
     raw = SRC / f"{sid}.orig"
     f.save(raw)
     dst = SRC / f"{sid}.mp4"
-    r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(raw), "-c:v", "libx264", "-preset", "veryfast",
+    r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-threads", "1", "-i", str(raw), "-c:v", "libx264",
+                        "-preset", "faster", "-threads", "1", "-x264-params", "rc-lookahead=0:ref=1:bframes=0",
                         "-crf", "18", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(dst)],
                        capture_output=True, text=True)
     raw.unlink(missing_ok=True)
@@ -331,17 +332,17 @@ def render_job(jid, p):
         length = max(0.5, end - start)
         work = WORK / jid
         work.mkdir(parents=True, exist_ok=True)
-        inputs = ["-ss", f"{start:.3f}", "-t", f"{length:.3f}", "-i", str(src)]
+        inputs = ["-threads", "1", "-ss", f"{start:.3f}", "-t", f"{length:.3f}", "-i", str(src)]
         n = 1
         if p.get("layout") == "blur":
             seam = (H - round(W * meta["height"] / meta["width"])) // 2
-            g = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},"
+            g = (f"[0:v]fps=30,split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},"
                  f"boxblur=30:2[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2[v0];")
         else:
             cx, cy, cw, ch = [int(v) for v in p["cam"]]
             gx, gy, gw, gh = [int(v) for v in p["game"]]
-            g = (f"[0:v]crop={cw}:{ch}:{cx}:{cy},scale={W}:{CAM_H},setsar=1[cam];"
-                 f"[0:v]crop={gw}:{gh}:{gx}:{gy},scale={W}:{GAME_H},setsar=1[game];[cam][game]vstack[v0];")
+            g = (f"[0:v]fps=30,split[s1][s2];[s1]crop={cw}:{ch}:{cx}:{cy},scale={W}:{CAM_H},setsar=1[cam];"
+                 f"[s2]crop={gw}:{gh}:{gx}:{gy},scale={W}:{GAME_H},setsar=1[game];[cam][game]vstack[v0];")
             seam = CAM_H
         last = "v0"
         if p.get("captions"):
@@ -367,8 +368,9 @@ def render_job(jid, p):
         name = re.sub(r"[^\w-]+", "-", p.get("name") or sid).strip("-")[:50] or sid
         out = OUT / f"{name}-{jid[:6]}.mp4"
         job["step"] = "video oluşturuluyor"
-        r = subprocess.run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", g, "-map", "[vout]",
-                            "-map", "0:a?", "-c:v", "libx264", "-crf", "19", "-preset", "medium", "-r", "30",
+        r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-filter_threads", "1", *inputs, "-filter_complex", g,
+                            "-map", "[vout]", "-map", "0:a?", "-c:v", "libx264", "-crf", "20", "-preset", "faster",
+                            "-threads", "1", "-x264-params", "rc-lookahead=0:ref=1:bframes=0:sync-lookahead=0", "-r", "30",
                             "-c:a", "aac", "-b:a", "192k", "-af", "loudnorm=I=-14:TP=-1", "-movflags", "+faststart",
                             str(out)], cwd=work, capture_output=True, text=True)
         if r.returncode != 0:
@@ -390,7 +392,8 @@ def render():
 
 @app.get("/api/job/<jid>")
 def job(jid):
-    return jsonify(jobs.get(jid) or {"status": "error", "step": "iş bulunamadı"})
+    return jsonify(jobs.get(jid) or {"status": "error",
+                                     "step": "Sunucu yeniden başladı, iş kayboldu. Lütfen tekrar 'Videoyu oluştur'a bas."})
 
 
 @app.get("/api/out/<name>")

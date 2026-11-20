@@ -14,6 +14,33 @@ function applyTheme(t) {
 applyTheme(document.documentElement.dataset.theme || "dark");
 $("#theme").onclick = () => applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 
+// logo -> ana sayfa
+$("#home").onclick = (e) => { e.preventDefault(); show("kick"); window.scrollTo({ top: 0, behavior: "smooth" }); };
+
+// kartlarda 3D eğilme (fare ve dokunma)
+function tilt(e) {
+  const card = e.target.closest && e.target.closest(".card");
+  if (!card) return;
+  const r = card.getBoundingClientRect(), p = e.touches ? e.touches[0] : e;
+  const x = (p.clientX - r.left) / r.width, y = (p.clientY - r.top) / r.height;
+  card.style.setProperty("--ry", ((x - .5) * 18).toFixed(2) + "deg");
+  card.style.setProperty("--rx", ((.5 - y) * 14).toFixed(2) + "deg");
+  card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+  card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+  card.classList.add("tilt");
+}
+function untilt(e) {
+  const card = e.target.closest && e.target.closest(".card");
+  if (!card || (e.relatedTarget && card.contains(e.relatedTarget))) return;
+  ["--rx", "--ry"].forEach((v) => card.style.setProperty(v, "0deg"));
+  card.classList.remove("tilt");
+}
+const gridEl = $("#grid");
+gridEl.addEventListener("pointermove", tilt);
+gridEl.addEventListener("pointerout", untilt);
+gridEl.addEventListener("touchmove", tilt, { passive: true });
+gridEl.addEventListener("touchend", (e) => { const c = e.target.closest(".card"); if (c) { c.style.setProperty("--rx", "0deg"); c.style.setProperty("--ry", "0deg"); c.classList.remove("tilt"); } });
+
 // ---------- tabs ----------
 function show(tab) {
   document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));

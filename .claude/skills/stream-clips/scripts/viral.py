@@ -37,9 +37,14 @@ for c in spec:
     gh = H - top
     gw = round(1080 * W / gh / 2) * 2         # gameplay crop width at full source height
     gx = c.get("game_x", (1920 - gw) // 2)
-    graph = (f"[0:v]crop={w}:{ch}:{x}:{cy},scale={W}:{top}[cam];"
-             f"[0:v]crop={gw}:1080:{gx}:0,scale={W}:{gh}[game];"
-             f"[cam][game]vstack[st];[st]ass={ass.name}[sub];"
+    if c.get("layout") == "blur":   # whole 16:9 frame over a blurred copy (cam and game change places)
+        top = (H - round(W * 9 / 16)) // 2
+        stack = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                 f"crop={W}:{H},boxblur=30:2[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2[st];")
+    else:
+        stack = (f"[0:v]crop={w}:{ch}:{x}:{cy},scale={W}:{top}[cam];"
+                 f"[0:v]crop={gw}:1080:{gx}:0,scale={W}:{gh}[game];[cam][game]vstack[st];")
+    graph = (stack + f"[st]ass={ass.name}[sub];"
              f"[1:v]scale='min(iw,1000)':-1[t];[sub][t]overlay=(W-w)/2:{top}-h/2[v]")
     out = out_dir / f"{name}.mp4"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(c["start"]), "-t", str(length),

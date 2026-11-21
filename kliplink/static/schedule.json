@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21 13:20",
+  "updated": "2026-11-21 19:10",
   "slots": [
     "13:00",
     "18:30",
@@ -20,8 +20,10 @@
       "time": "18:30",
       "title": "Eray GTA 6 yayınında havuzdaki KAOSU izleyince GÜLMEKTEN YARILDILAR 😂",
       "streamer": "Eray",
-      "status": "scheduled",
-      "kick_clip": "clip_01M7YFN4G4XFRA91E98J568WY2"
+      "status": "published",
+      "kick_clip": "clip_01M7YFN4G4XFRA91E98J568WY2",
+      "instagram": "https://www.instagram.com/reel/DgAjkKcjTI8/",
+      "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710647453460057365"
     },
     {
       "time": "20:30",
@@ -37,6 +39,13 @@
       "status": "scheduled",
       "platform": "YouTube",
       "youtube": "https://www.youtube.com/watch?v=mOieuBrIMy4"
+    },
+    {
+      "time": "23:00",
+      "title": "wtcN GTA 6'da \"seremoni yapalım\" deyip çatıdan ATLADI… sonuç: WASTED 😭",
+      "streamer": "wtcN",
+      "status": "scheduled",
+      "kick_clip": "clip_01M7Z90C70S4KW4FREW798V84Q"
     }
   ],
   "analyst": [

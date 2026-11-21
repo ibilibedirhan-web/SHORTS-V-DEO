@@ -198,7 +198,8 @@ async function detect() {
   msg.textContent = "Kamera aranıyor…";
   try {
     const d = await api(`/api/detect/${state.src.id}`);
-    state.cam = d.cam; state.game = d.game;
+    state.win = d.window || d.cam; state.fill = d.cam; state.game = d.game;
+    state.cam = $("#camfit").value === "full" ? state.win : state.fill;
     $("#layout").value = d.layout;
     msg.textContent = !d.found ? "Yüz bulunamadı — kutuları elle yerleştir."
       : d.layout === "blur" ? "Tam ekran kamera bulundu → tam kare düzen seçildi." : "Kamera bulundu ✔";
@@ -208,6 +209,18 @@ async function detect() {
 }
 $("#detect").onclick = detect;
 $("#layout").onchange = () => { stage.classList.toggle("blur", $("#layout").value === "blur"); };
+function fitCam(b) {          // kutuyu kamera alanı oranına (1080x806) göre ortadan kırp
+  let [x, y, w, h] = b;
+  if (w / h > CAM_AR) { const nw = h * CAM_AR; x += (w - nw) / 2; w = nw; }
+  else { const nh = w / CAM_AR; y += (h - nh) / 2; h = nh; }
+  return clampBox([x, y, w, h]);
+}
+$("#camfit").onchange = () => {
+  if (!state.src) return;
+  if ($("#camfit").value === "fill") { state.win = state.cam; state.cam = fitCam(state.cam); }
+  else state.cam = state.win || state.cam;
+  layoutBoxes();
+};
 
 function scale() { return stage.clientWidth / (state.src ? state.src.width : 1920); }
 function layoutBoxes() {
@@ -242,9 +255,13 @@ function makeDraggable(el, key, ar) {
     let [x, y, w, h] = start;
     if (mode === "move") { x += dx; y += dy; }
     else {
-      w = Math.max(80, w + Math.max(dx, dy * ar));
-      const maxW = Math.min(state.src.width - x, (state.src.height - y) * ar);
-      w = Math.min(w, maxW); h = w / ar;
+      const a = typeof ar === "function" ? ar() : ar;
+      if (!a) { w = Math.max(60, Math.min(w + dx, state.src.width - x)); h = Math.max(40, Math.min(h + dy, state.src.height - y)); }
+      else {
+        w = Math.max(80, w + Math.max(dx, dy * a));
+        const maxW = Math.min(state.src.width - x, (state.src.height - y) * a);
+        w = Math.min(w, maxW); h = w / a;
+      }
     }
     state[key] = clampBox([x, y, w, h]);
     layoutBoxes();
@@ -253,7 +270,7 @@ function makeDraggable(el, key, ar) {
   el.addEventListener("pointerup", end);
   el.addEventListener("pointercancel", end);
 }
-makeDraggable($("#box-cam"), "cam", CAM_AR);
+makeDraggable($("#box-cam"), "cam", () => ($("#camfit").value === "full" ? 0 : CAM_AR));
 makeDraggable($("#box-game"), "game", GAME_AR);
 
 // playback + trim
@@ -341,7 +358,14 @@ function drawPreview() {
     ctx.drawImage(video, 0, seam, cv.width, fh);
   } else {
     const [cx, cy, cw, ch] = state.cam, [gx, gy, gw, gh] = state.game;
-    ctx.drawImage(video, cx, cy, cw, ch, 0, 0, cv.width, CAM_H * k);
+    if ($("#camfit").value === "full") {
+      const ch2 = CAM_H * k, sc2 = Math.min(cv.width / cw, ch2 / ch), sc3 = Math.max(cv.width / cw, ch2 / ch);
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, cv.width, ch2); ctx.clip();
+      ctx.filter = "blur(12px)";
+      ctx.drawImage(video, cx, cy, cw, ch, (cv.width - cw * sc3) / 2, (ch2 - ch * sc3) / 2, cw * sc3, ch * sc3);
+      ctx.filter = "none"; ctx.restore();
+      ctx.drawImage(video, cx, cy, cw, ch, (cv.width - cw * sc2) / 2, (ch2 - ch * sc2) / 2, cw * sc2, ch * sc2);
+    } else ctx.drawImage(video, cx, cy, cw, ch, 0, 0, cv.width, CAM_H * k);
     ctx.drawImage(video, gx, gy, gw, gh, 0, CAM_H * k, cv.width, GAME_H * k);
     seam = CAM_H * k;
   }
@@ -361,7 +385,7 @@ $("#render").onclick = async () => {
   setStatus(st, "🎬 Video oluşturuluyor…");
   try {
     const body = {
-      id: state.src.id, start, end, layout: $("#layout").value, cam: state.cam, game: state.game,
+      id: state.src.id, start, end, layout: $("#layout").value, cam: state.cam, game: state.game, cam_fit: $("#camfit").value,
       title: $("#title").value, accent: $("#accent").value,
       bar: $("#barOn").checked ? $("#bar").value.trim() : "", bar_color: $("#barColor").value,
       captions: $("#caps").checked, lang: $("#lang").value, name: $("#name").value || slug(state.src.name),

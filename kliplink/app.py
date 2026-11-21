@@ -215,75 +215,162 @@ def game_box(vw, vh, cam, ar):
     return box(gx, 0, gw, vh, vw, vh)
 
 
+DEBUG_CAM = os.environ.get("DEBUG_CAM")
+
+
+def cam_window(V, Hh, M, face, k):
+    """Yüzü içine alan kamera penceresini arar (küçük ölçekte). Döner ((L,T,R,B), skor) ya da (None, 0).
+    V/Hh: kareler boyunca sabit kalan dikey/yatay kenar oranı, M: ortalama hareket."""
+    sh, sw = V.shape
+    Vc = np.vstack([np.zeros((1, sw)), np.cumsum(V, 0)])
+    Hc = np.hstack([np.zeros((sh, 1)), np.cumsum(Hh, 1)])
+    Mi = cv2.integral(M)
+    fx, fy, fw, fh = [v * k for v in face]
+    cx, cy = fx + fw / 2, fy + fh / 2
+    band = V[int(max(0, fy - fh)):int(min(sh, fy + 2 * fh))].mean(0)
+    cband = Hh[:, int(max(0, fx - fw)):int(min(sw, fx + 2 * fw))].mean(1)
+
+    def peaks(p, lo, hi, kmax=8):
+        lo, hi = max(1, int(lo)), min(len(p) - 1, int(hi))
+        idx = [i for i in range(lo, hi) if p[i] >= p[i - 1] and p[i] >= p[i + 1] and p[i] > 0.15]
+        return sorted(idx, key=lambda i: -p[i])[:kmax]
+
+    def msum(x0, y0, x1, y1):
+        x0, x1 = max(0, min(sw, x0)), max(0, min(sw, x1))
+        y0, y1 = max(0, min(sh, y0)), max(0, min(sh, y1))
+        if x1 <= x0 or y1 <= y0:
+            return None
+        return (Mi[y1, x1] - Mi[y0, x1] - Mi[y1, x0] + Mi[y0, x0]) / ((x1 - x0) * (y1 - y0))
+
+    def contrast(out, inn):                  # dışarısı (oyun) içeriden (kamera) hareketliyse gerçek kenar
+        if out is None or inn is None:
+            return 0.5
+        return float(np.clip((out - inn) / (out + inn + 1e-3), 0, 1))
+
+    def vside(x, t, b):
+        return 0.55 if x <= 0 or x >= sw else (Vc[b, x] - Vc[t, x]) / max(1, b - t)
+
+    def hside(y, l, r):
+        return 0.55 if y <= 0 or y >= sh else (Hc[y, r] - Hc[y, l]) / max(1, r - l)
+
+    Ls = [0] + peaks(band, cx - fw * 6, fx - fw * 0.2)
+    Rs = [sw] + peaks(band, fx + fw * 1.2, cx + fw * 6)
+    Ts = [0] + peaks(cband, cy - fh * 5, fy - fh * 0.1)
+    Bs = [sh] + peaks(cband, fy + fh * 1.1, cy + fh * 6)
+    best, bs, d = None, 0.0, 6
+    for L in Ls:
+        for R in Rs:
+            w = R - L
+            if w < fw * 1.8 or w > sw * 0.6 or not 0.07 <= fw / w <= 0.55:
+                continue
+            for T in Ts:
+                for B in Bs:
+                    h = B - T
+                    if h < fh * 1.6 or not 0.9 <= w / h <= 2.6:
+                        continue
+                    s = [vside(L, T, B), vside(R, T, B), hside(T, L, R), hside(B, L, R)]
+                    c = [contrast(msum(L - d, T, L, B) if L > 0 else None, msum(L, T, L + d, B)),
+                         contrast(msum(R, T, R + d, B) if R < sw else None, msum(R - d, T, R, B)),
+                         contrast(msum(L, T - d, R, T) if T > 0 else None, msum(L, T, R, T + d)),
+                         contrast(msum(L, B, R, B + d) if B < sh else None, msum(L, B - d, R, B))]
+                    s = [a + 0.4 * b for a, b in zip(s, c)]
+                    sc = 0.5 * np.mean(s) + 0.5 * min(s) + 0.02 * w * h / (sw * sh) - 0.12 * abs(np.log(w / h / 1.78))
+                    if sc > bs:
+                        bs, best = sc, (L, T, R, B)
+    return best, bs
+
+
 def detect_cam(path, meta):
-    """Kameranın yerini bulur. Döner: {layout, cam:[x,y,w,h], game:[x,y,w,h], found}"""
+    """Kameranın yerini bulur. Döner: {layout, cam:[x,y,w,h], window, game:[x,y,w,h], found}"""
     vw, vh, dur = meta["width"], meta["height"], meta["duration"]
     cam_ar, game_ar = W / CAM_H, W / GAME_H
     cap = cv2.VideoCapture(str(path))
     sw = 640
     sh = round(vh * sw / vw)
+    k = sw / vw
     det = cv2.FaceDetectorYN.create(str(face_model()), "", (sw, sh), 0.7, 0.3, 50)
-    faces, gxs, gys = [], [], []
-    for i in range(10):
-        cap.set(cv2.CAP_PROP_POS_MSEC, 1000 * dur * (i + 0.5) / 10)
+    faces, grays = [], []
+    V = np.zeros((sh, sw), np.float32)
+    Hh = np.zeros((sh, sw), np.float32)
+    n = 24
+    for i in range(n):
+        cap.set(cv2.CAP_PROP_POS_MSEC, 1000 * dur * (i + 0.5) / n)
         ok, fr = cap.read()
         if not ok:
             continue
         small = cv2.resize(fr, (sw, sh))
-        g = cv2.GaussianBlur(cv2.cvtColor(small, cv2.COLOR_BGR2GRAY), (3, 3), 0).astype(np.float32)
-        gxs.append(np.abs(cv2.Sobel(g, cv2.CV_32F, 1, 0)))
-        gys.append(np.abs(cv2.Sobel(g, cv2.CV_32F, 0, 1)))
+        g = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
+        e = cv2.Canny(g, 40, 120) > 0
+        gx = np.abs(cv2.Sobel(g, cv2.CV_32F, 1, 0))
+        gy = np.abs(cv2.Sobel(g, cv2.CV_32F, 0, 1))
+        V += e & (gx > gy)
+        Hh += e & (gy >= gx)
+        grays.append(cv2.GaussianBlur(g, (5, 5), 0).astype(np.float32))
         _, f = det.detect(small)
         for x, y, w, h, *_rest, score in (f if f is not None else []):
-            faces.append((x * vw / sw, y * vh / sh, w * vw / sw, h * vh / sh, score))
+            faces.append((x / k, y / k, w / k, h / k))
     cap.release()
-    if not faces:
+    if not faces or len(grays) < 3:
         cw = vw * 0.3
         return {"layout": "split", "found": False, "cam": box(0, 0, cw, cw / cam_ar, vw, vh),
                 "game": game_box(vw, vh, None, game_ar)}
-    # aynı yerde en sık görülen yüz kümesi
+    V /= len(grays)
+    Hh /= len(grays)
+    V = np.maximum(V, np.maximum(np.roll(V, 1, 1), np.roll(V, -1, 1)))
+    Hh = np.maximum(Hh, np.maximum(np.roll(Hh, 1, 0), np.roll(Hh, -1, 0)))
+    M = np.mean([np.abs(a - b) for a, b in zip(grays, grays[1:])], axis=0)
+
+    # yüz kümeleri (aynı yerde tekrar eden yüzler), en sık görülenden başla
     faces.sort(key=lambda f: -f[2])
-    best, best_n = None, 0
+    clusters = []
     for f in faces:
-        n = sum(1 for g in faces if abs(g[0] + g[2] / 2 - f[0] - f[2] / 2) < f[2] and abs(g[1] - f[1]) < f[3])
-        if n > best_n:
-            best, best_n = f, n
-    fx, fy, fw, fh, _ = best
-    if fw > vw * 0.16:                       # tam ekran kamera / stüdyo çekimi
-        return {"layout": "blur", "found": True, "cam": [0, 0, vw, vh], "game": [0, 0, vw, vh]}
-
-    # Kamera penceresinin kenarları: kareden kareye sabit kalan düz çizgiler (medyan kenar haritası).
-    k = sw / vw
-    gx_med = np.median(np.stack(gxs), axis=0)
-    gy_med = np.median(np.stack(gys), axis=0)
-    sfx, sfy, sfw, sfh = fx * k, fy * k, fw * k, fh * k
-    r0, r1 = int(max(0, sfy - sfh)), int(min(sh, sfy + 2 * sfh))
-    c0, c1 = int(max(0, sfx - sfw * 1.5)), int(min(sw, sfx + sfw * 2.5))
-    colstr = gx_med[r0:r1].mean(axis=0)
-    rowstr = gy_med[:, c0:c1].mean(axis=1)
-
-    def edge(strength, lo, hi, default, thr):
-        lo, hi = max(0, int(lo)), min(len(strength), int(hi))
-        if hi - lo < 2:
-            return default
-        i = lo + int(np.argmax(strength[lo:hi]))
-        return i if strength[i] > thr else default
-
-    tc, tr = colstr.mean() * 2.2, rowstr.mean() * 2.2
-    left = edge(colstr, sfx - sfw * 4, sfx - sfw * 0.4, 0, tc)
-    right = edge(colstr, sfx + sfw * 1.4, sfx + sfw * 5, sw, tc)
-    top = edge(rowstr, sfy - sfh * 3, sfy - sfh * 0.3, 0, tr)
-    bottom = edge(rowstr, sfy + sfh * 1.5, sfy + sfh * 5, sh, tr)
-    if left < sw * 0.02: left = 0
-    if right > sw * 0.98: right = sw
-    if top < sh * 0.02: top = 0
-    if bottom > sh * 0.98: bottom = sh
-    L, R, T, B = left / k, right / k, top / k, bottom / k
-    if R - L > fw * 7 or B - T > fh * 7:      # kenar bulunamadı -> yüz etrafında tahmin
-        cw = min(vw, fw * 4.6)
-        ch = cw / cam_ar
-        L, T = fx + fw / 2 - cw / 2, fy + fh * 0.45 - ch * 0.42
+        for c in clusters:
+            r = c[0]
+            if (f[2] > r[2] * 0.6 and abs(f[0] + f[2] / 2 - r[0] - r[2] / 2) < r[2] * 1.5
+                    and abs(f[1] - r[1]) < r[3]):
+                c[1] += 1
+                break
+        else:
+            clusters.append([f, 1])
+    clusters.sort(key=lambda c: -c[1])
+    minc = max(2, len(grays) // 6)
+    best = None
+    for face, cnt in [c for c in clusters if c[0][2] <= vw * 0.2][:4]:
+        if cnt < minc and best:
+            continue
+        # aynı kamerada yan yana oturan kişiler: benzer boyutlu komşu yüzleri tek grup yap
+        fx, fy, fw, fh = face
+        grp = [c[0] for c in clusters if c[1] >= minc and 0.6 < c[0][2] / fw < 1.6
+               and abs(c[0][0] - fx) < fw * 6 and abs(c[0][1] - fy) < fh * 1.5]
+        gx0, gy0 = min(g[0] for g in grp + [face]), min(g[1] for g in grp + [face])
+        gx1 = max(g[0] + g[2] for g in grp + [face])
+        gy1 = max(g[1] + g[3] for g in grp + [face])
+        for q in ([face, (gx0, gy0, gx1 - gx0, gy1 - gy0)] if len(grp) > 1 else [face]):
+            win, sc = cam_window(V, Hh, M, q, k)
+            sc += 0.1 * min(1, cnt / len(grays))
+            if DEBUG_CAM:
+                print("cam?", [round(v) for v in q], cnt, win, round(sc, 3))
+            if win and (best is None or sc > best[1]):
+                best = (q, sc, win)
+    if best is None or best[1] < 0.55:
+        small_faces = [c for c in clusters if c[0][2] <= vw * 0.16 and c[1] >= minc]
+        if not small_faces:                  # tam ekran kamera / stüdyo çekimi
+            return {"layout": "blur", "found": True, "cam": [0, 0, vw, vh], "game": [0, 0, vw, vh]}
+        fx, fy, fw, fh = small_faces[0][0]
+        cw = min(vw * 0.5, fw * 2.9)         # kenarsız kamera: yüz çevresinde 16:9, ekran kenarına yasla
+        ch = cw / 1.78
+        L, T = fx + fw / 2 - cw / 2, fy + fh * 0.45 - ch * 0.45
+        if L < fw * 0.6: L = 0
+        if L + cw > vw - fw * 0.6: L = vw - cw
+        if T < fh * 0.6: T = 0
+        if T + ch > vh - fh * 0.6: T = vh - ch
+        L, T = max(0, min(L, vw - cw)), max(0, min(T, vh - ch))
         R, B = L + cw, T + ch
+        found = False
+    else:
+        fx, fy, fw, fh = best[0]
+        L, T, R, B = [v / k for v in best[2]]
+        found = True
     # pencereyi %42 alanın oranına (1080x806) uydur, yüzü ortada tut
     ww, hh = R - L, B - T
     if ww / hh > cam_ar:
@@ -294,7 +381,7 @@ def detect_cam(path, meta):
         cx, cy = L, min(max(fy + fh / 2 - ch * 0.45, T), B - ch)
     cam = box(cx, cy, cw, ch, vw, vh)
     win = [round(L), round(T), round(R - L), round(B - T)]
-    return {"layout": "split", "found": True, "cam": cam, "window": win, "game": game_box(vw, vh, win, game_ar)}
+    return {"layout": "split", "found": found, "cam": cam, "window": win, "game": game_box(vw, vh, win, game_ar)}
 
 
 @app.get("/api/detect/<sid>")
@@ -365,7 +452,14 @@ def render_job(jid, p):
         else:
             cx, cy, cw, ch = [int(v) for v in p["cam"]]
             gx, gy, gw, gh = [int(v) for v in p["game"]]
-            g = (f"[0:v]fps=30,split[s1][s2];[s1]crop={cw}:{ch}:{cx}:{cy},scale={W}:{CAM_H},setsar=1[cam];"
+            if p.get("cam_fit", "full") == "full":   # kameranın tamamı, boşluk bulanık kamera ile dolar
+                camf = (f"[s1]crop={cw}:{ch}:{cx}:{cy},split[c1][c2];"
+                        f"[c1]scale={W}:{CAM_H}:force_original_aspect_ratio=increase,crop={W}:{CAM_H},boxblur=20:2[cbg];"
+                        f"[c2]scale={W}:{CAM_H}:force_original_aspect_ratio=decrease:force_divisible_by=2[cfg];"
+                        f"[cbg][cfg]overlay=(W-w)/2:(H-h)/2,setsar=1[cam];")
+            else:
+                camf = f"[s1]crop={cw}:{ch}:{cx}:{cy},scale={W}:{CAM_H},setsar=1[cam];"
+            g = (f"[0:v]fps=30,split[s1][s2];{camf}"
                  f"[s2]crop={gw}:{gh}:{gx}:{gy},scale={W}:{GAME_H},setsar=1[game];[cam][game]vstack[v0];")
             seam = CAM_H
         last = "v0"

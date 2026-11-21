@@ -1,6 +1,8 @@
 """Render short viral-style 9:16 clips from 16:9 stream clips.
 usage: python viral.py <spec.json> <src_dir> <out_dir>
-spec: [{name, src, start, end, cam:[x,y,w,h] (px in 1920x1080), lang, title, accent?, captions?}]
+spec: [{name, src, start, end, cam:[x,y,w,h] (px in 1920x1080) or "auto", lang, title, accent?, captions?,
+        cam_fit?: "full" (default: whole cam window in the top 42%, gaps filled with blurred cam) | "fill" (zoom/crop)}]
+cam "auto" (or no cam) runs KLİPLİNK's facecam detector (kliplink/app.py detect_cam) and also picks layout/game_x.
 title: put the streamer's name in [brackets] to colour it with `accent` (hex).
 captions default to on, except for Turkish (lang "tr") streams, which get none."""
 import json, subprocess, sys
@@ -42,19 +44,34 @@ for c in spec:
         d.text((x + w1 + 28, 36), c["bar"], font=f2, fill="white", anchor="lm")
         im.save(bar)
 
+    if c.get("cam", "auto") == "auto":
+        sys.path.insert(0, "/home/user/SHORTS-V-DEO/kliplink")
+        import app as kliplink  # noqa: E402
+        srcp = src_dir / c["src"]
+        det = kliplink.detect_cam(srcp, kliplink.probe(srcp))
+        c["cam"] = det.get("window", det["cam"])
+        c.setdefault("layout", det["layout"])
+        if det["layout"] != "blur":
+            c.setdefault("game_x", det["game"][0])
+        print("cam", name, det, flush=True)
     x, y, w, h = c["cam"]
-    top = min(round(W * h / w / 2) * 2, 760)
+    full = c.get("cam_fit", "full") == "full"
+    top = 806 if full else min(round(W * h / w / 2) * 2, 760)
     ch = round(w * top / W / 2) * 2          # cam crop height for target aspect
     cy = y + max(0, min(h - ch, c.get("cam_dy", 0)))
     gh = H - top
     gw = round(1080 * W / gh / 2) * 2         # gameplay crop width at full source height
-    gx = c.get("game_x", (1920 - gw) // 2)
+    gx = max(0, min(1920 - gw, c.get("game_x", (1920 - gw) // 2)))
     if c.get("layout") == "blur":   # whole 16:9 frame over a blurred copy (cam and game change places)
         top = (H - round(W * 9 / 16)) // 2
         stack = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,"
                  f"crop={W}:{H},boxblur=30:2[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2[st];")
     else:
-        stack = (f"[0:v]crop={w}:{ch}:{x}:{cy},scale={W}:{top}[cam];"
+        camf = (f"[0:v]crop={w}:{h}:{x}:{y},split[c1][c2];[c1]scale={W}:{top}:force_original_aspect_ratio=increase,"
+                f"crop={W}:{top},boxblur=20:2[cbg];[c2]scale={W}:{top}:force_original_aspect_ratio=decrease:"
+                f"force_divisible_by=2[cfg];[cbg][cfg]overlay=(W-w)/2:(H-h)/2,setsar=1[cam];" if full else
+                f"[0:v]crop={w}:{ch}:{x}:{cy},scale={W}:{top}[cam];")
+        stack = (camf +
                  f"[0:v]crop={gw}:1080:{gx}:0,scale={W}:{gh}[game];[cam][game]vstack[st];")
     graph = (stack + f"[st]ass={ass.name}[sub];"
              + (f"[2:v]null[b];[sub][b]overlay=0:{top}[sb];[1:v]scale='min(iw,1000)':-1[t];"

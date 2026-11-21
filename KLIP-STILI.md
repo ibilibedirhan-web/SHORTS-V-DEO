@@ -30,7 +30,12 @@ Instagram, TikTok ve YouTube Shorts için yayıncı klipleri. Bu kurallar her ye
 
 ## Araç
 `.claude/skills/stream-clips/scripts/viral.py <spec.json> <kaynak_klasör> <çıkış_klasör>`
-spec alanları: name, src, start, end, cam [x,y,w,h], lang, title, accent, bar, layout, game_x.
+spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, title, accent, bar, layout, game_x, cam_fit.
+- Kamerayı elle ölçme: `"cam": "auto"` ver — KLİPLİNK'in algılayıcısı (`kliplink/app.py` → `detect_cam`) kamera
+  penceresini bulur, düzeni (split/blur) ve oyun kesitini de seçer (test setinde ortalama %95 isabet).
+- `cam_fit` varsayılan `"full"`: kameranın **tamamı** üst %42'de görünür, kenar boşlukları bulanık kamerayla dolar.
+  `"fill"` sadece yayıncı tek kişiyse ve yakın plan istenirse.
+- Render sonrası bir kareye bakıp kameranın tam ve doğru yerde olduğunu kontrol et; yanlışsa cam'i elle düzelt.
 
 ## Hesaplar ve yayınlama (vidIQ üzerinden bağlı)
 - TikTok: Raynax Clips — herkese açık, yorumlar açık (müzik kullanım onayı verildi).

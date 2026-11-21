@@ -80,4 +80,11 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
   Tek seferlik değişiklikleri (ör. belirli bir klibin kesim saniyesi) kural yapma; tekrar edenleri kural yap.
 
 ## Öğrenilen stil (kullanıcı düzeltmelerinden)
-- (henüz yok)
+- 2026-11-21 · (TikTok verisi) İzlenmenin %87'si aramadan: başlık ve açıklamanın İLK satırı aranan kelimelerle
+  başlasın: yayıncı adı + "GTA 6" + oyundaki karakter/olay (Lucia, Jason, Vice City, polis kovalamacası…).
+  Hashtag'lerde de: #eray #gta6 #gta6türkiye + karakter adı (#lucia).
+- 2026-11-21 · İzleyicinin çoğu 1. saniyede çıkıyor: ilk kare tepki/aksiyon olsun, kurulumu 1 sn'yi geçmesin;
+  sinematik/durgun açılış kareyle başlama. 10-15 sn ideal (11 sn klip %61 izlendi).
+- 2026-11-21 · Yorum 0, takipçi dönüşümü çok düşük: açıklamada tartışma açan soru ("Eray haklı mı? 👇"),
+  seri başlık kalıbı ("Eray GTA 6'da …" serisi) ve sonda "devamı profilde".
+- 2026-11-21 · Kitle %50 kadın, 18-34 yaş, %92 Türkiye: ilişki/drama/Lucia hikâyeleri ve RRaenee iyi gider.

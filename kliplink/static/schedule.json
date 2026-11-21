@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21 10:35",
+  "updated": "2026-11-21 10:40",
   "slots": [
     "13:00",
     "18:30",
@@ -8,12 +8,11 @@
   ],
   "posts": [],
   "analyst": [
-    "TikTok (@raynaxclips): 6 video, 163 beğeni, 1 takipçi → video başı ~27 beğeni var ama izleyen takip etmiyor.",
-    "Takipçi dönüşümü için: Eray'la seri yap (aynı başlık kalıbı), en iyi 3 klibi profile sabitle.",
-    "Instagram: 11-12 sn klipler %80 izlenme oranı aldı, 56 sn olanlar %14-28. 10-20 sn'de kal.",
-    "En çok izlenen: Eray Lucia'ya aşık (492 izlenme, 3 paylaşım).",
-    "Hesap yeni (2 takipçi): 2 hafta boyunca günde 4 klip, ara verme.",
-    "Takip edilen 78 hesap çok fazla, artırma."
+    "TikTok 'Eray Lucia'ya aşık oldu': 19 saatte 7.014 izlenme — %87'si ARAMADAN geldi, Sizin İçin sadece %13.",
+    "İnsanlar 'Eray GTA 6 Lucia' diye arıyor → başlık + açıklamanın ilk satırına aranan kelimeler: yayıncı + GTA 6 + karakter/olay adı.",
+    "Çoğu izleyici 1. saniyede çıkıyor → klip en vurucu anla başlasın, ilk karede tepki/aksiyon olsun.",
+    "0 yorum, 7.000 izlenmede 1 takipçi → ekranda soru + 'devamı profilde' ve Eray'la seri başlık.",
+    "Kitle: %50 kadın, %85'i 18-34, %92 Türkiye → Lucia/ilişki/drama hikâyeleri ve RRaenee klipleri bu kitleye uygun."
   ],
   "tiktok": [
     {
@@ -21,6 +20,37 @@
       "followers": 1,
       "likes": 163,
       "videos": 6
+    }
+  ],
+  "tiktok_videos": [
+    {
+      "t": "2026-11-21 10:35",
+      "title": "Eray GTA 6 oynarken Lucia'ya gerçekten AŞIK OLDU 😭",
+      "age_h": 19,
+      "len_s": 11,
+      "views": 7014,
+      "likes": 25,
+      "comments": 0,
+      "shares": 5,
+      "saves": 5,
+      "new_followers": 1,
+      "avg_watch_s": 6.8,
+      "full_watch_pct": 25.43,
+      "avg_pct": 61,
+      "drop_at": "0:01",
+      "traffic": {
+        "search": 86.8,
+        "foryou": 12.7,
+        "profile": 0.3
+      },
+      "audience": {
+        "male": 49,
+        "female": 50,
+        "18-24": 44,
+        "25-34": 41,
+        "TR": 92.4,
+        "AZ": 4.9
+      }
     }
   ]
 }

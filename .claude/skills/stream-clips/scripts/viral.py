@@ -54,6 +54,13 @@ for c in spec:
         if det["layout"] != "blur":
             c.setdefault("game_x", det["game"][0])
         print("cam", name, det, flush=True)
+    rate = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v", "-show_entries", "stream=avg_frame_rate",
+                           "-of", "csv=p=0", str(src_dir / c["src"])], capture_output=True, text=True).stdout.strip()
+    try:
+        num, den = (rate.split("/") + ["1"])[:2]
+        fps = 60 if float(num) / float(den or 1) >= 50 else 30   # keep 60 fps streams smooth
+    except ValueError:
+        fps = 30
     x, y, w, h = c["cam"]
     full = c.get("cam_fit", "full") == "full"
     top = 806 if full else min(round(W * h / w / 2) * 2, 760)
@@ -64,15 +71,16 @@ for c in spec:
     gx = max(0, min(1920 - gw, c.get("game_x", (1920 - gw) // 2)))
     if c.get("layout") == "blur":   # whole 16:9 frame over a blurred copy (cam and game change places)
         top = (H - round(W * 9 / 16)) // 2
-        stack = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,"
+        stack = (f"[0:v]fps={fps},split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,"
                  f"crop={W}:{H},boxblur=30:2[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2[st];")
     else:
-        camf = (f"[0:v]crop={w}:{h}:{x}:{y},split[c1][c2];[c1]scale={W}:{top}:force_original_aspect_ratio=increase,"
+        camf = (f"[s1]crop={w}:{h}:{x}:{y},split[c1][c2];[c1]scale={W}:{top}:force_original_aspect_ratio=increase,"
                 f"crop={W}:{top},boxblur=20:2[cbg];[c2]scale={W}:{top}:force_original_aspect_ratio=decrease:"
                 f"force_divisible_by=2[cfg];[cbg][cfg]overlay=(W-w)/2:(H-h)/2,setsar=1[cam];" if full else
-                f"[0:v]crop={w}:{ch}:{x}:{cy},scale={W}:{top}[cam];")
-        stack = (camf +
-                 f"[0:v]crop={gw}:1080:{gx}:0,scale={W}:{gh}[game];[cam][game]vstack[st];")
+                f"[s1]crop={w}:{ch}:{x}:{cy},scale={W}:{top}[cam];")
+        # fps=30 once, before splitting: 60 fps / VFR sources otherwise judder (dropped + repeated frames)
+        stack = (f"[0:v]fps={fps},split[s1][s2];" + camf +
+                 f"[s2]crop={gw}:1080:{gx}:0,scale={W}:{gh},setsar=1[game];[cam][game]vstack[st];")
     graph = (stack + f"[st]ass={ass.name}[sub];"
              + (f"[2:v]null[b];[sub][b]overlay=0:{top}[sb];[1:v]scale='min(iw,1000)':-1[t];"
                 f"[sb][t]overlay=(W-w)/2:{top}+70+12[v]" if c.get("bar") else
@@ -81,6 +89,6 @@ for c in spec:
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(c["start"]), "-t", str(length),
                     "-i", str(src_dir / c["src"]), "-i", str(title)] + (["-i", str(bar)] if c.get("bar") else []) + ["-filter_complex", graph,
                     "-map", "[v]", "-map", "0:a", "-c:v", "libx264", "-crf", "19", "-preset", "medium",
-                    "-r", "30", "-c:a", "aac", "-b:a", "192k", "-af", "loudnorm=I=-14:TP=-1",
+                    "-r", str(fps), "-c:a", "aac", "-b:a", "192k", "-af", "loudnorm=I=-14:TP=-1",
                     "-movflags", "+faststart", str(out)], cwd=tmp, check=True)
     print("done", out, f"{length:.1f}s", flush=True)

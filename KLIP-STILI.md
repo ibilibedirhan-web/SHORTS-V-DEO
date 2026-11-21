@@ -92,4 +92,8 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
   ismini ayrı ve doğru yaz ("Sercan Zurna", asla "SercanZurna"). Ör: "[Eray] GTA 6'da Sercan Zurna ile polisten kaçarken…"
 - 2026-11-21 · Paylaşım = keşfet itişi: 0 paylaşımlı klip söndü. İzleyicinin arkadaşına atacağı anları seç
   (ilişki, utanç, absürt kaza, "tam bizim grup" anları).
+- 2026-11-21 · Kullanıcı sıradan oyun çatışmasını (3 yıldız polis kaçışı) BEĞENMEDİ. Tercih: yayıncıların
+  gülmekten yarıldığı, tepki verdiği anlar (kahkaha, şok, utanç) + absürt NPC tepkileri (Hype panik atak klibi seçildi).
+  Kahkaha bulmak için: klip başlığında klavye ezmesi (ASDFG…) + kamera karelerinde açık ağız/el kaldırma; Whisper kahkahayı yazmıyor.
+- 2026-11-21 · Kullanıcı paylaşım aralığına dikkat ediyor ("algoritmaya göre"): aynı hesaba arka arkaya atma, en az ~3 saat ara.
 - 2026-11-21 · Kitle %50 kadın, 18-34 yaş, %92 Türkiye: ilişki/drama/Lucia hikâyeleri ve RRaenee iyi gider.

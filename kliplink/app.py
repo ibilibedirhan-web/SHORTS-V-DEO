@@ -433,6 +433,51 @@ def index():
     return send_from_directory(HERE / "static", "index.html")
 
 
+# ---------------------------------------------------------------- 3D ofis
+WATCH = ["eray", "rraenee", "wtcn", "hype", "elraenn"]
+_office_cache = {"t": 0, "data": None}
+
+
+def kick_json(url):
+    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20) as r:
+        return json.load(r)
+
+
+@app.get("/ofis")
+def office_page():
+    return send_from_directory(HERE / "static", "ofis.html")
+
+
+@app.get("/api/office")
+def office():
+    now = time.time()
+    if not _office_cache["data"] or now - _office_cache["t"] > 90:
+        streamers = []
+        for ch in WATCH:
+            item = {"slug": ch, "live": False}
+            try:
+                j = kick_json(f"https://kick.com/api/v2/channels/{ch}")
+                ls = j.get("livestream") or {}
+                item.update(name=(j.get("user") or {}).get("username") or ch, live=bool(ls.get("is_live")),
+                            viewers=int(ls.get("viewer_count") or 0), title=ls.get("session_title", ""))
+                c = kick_json(f"https://kick.com/api/v2/channels/{ch}/clips?sort=view&time=day").get("clips") or []
+                if c:
+                    item.update(top_clip=c[0].get("title", ""), top_views=int(c[0].get("views") or 0))
+            except Exception as e:
+                item["error"] = str(e)[:80]
+            streamers.append(item)
+        _office_cache.update(t=now, data=streamers)
+    running = [j for j in jobs.values() if j.get("status") == "running"]
+    done = sorted((j for j in jobs.values() if j.get("status") == "done"), key=lambda j: j.get("started", 0))
+    try:
+        plan = json.loads((HERE / "static" / "schedule.json").read_text())
+    except Exception:
+        plan = {}
+    return jsonify(streamers=_office_cache["data"], running=len(running),
+                   running_step=running[-1]["step"] if running else "",
+                   last_file=done[-1]["file"] if done else "", rendered=len(done), plan=plan)
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     print(f"KLİPLİNK çalışıyor: http://localhost:{port}")

@@ -40,3 +40,12 @@ spec alanları: name, src, start, end, cam [x,y,w,h], lang, title, accent, bar, 
 
 ## KLİPLİNK sitesi
 - Canlı: https://shorts-v-deo.onrender.com (Render ücretsiz, 512 MB) — orada çıktı 720x1280 (`OUT_W=720`).
+
+## Otomatik paylaşım akışı (kullanıcı: "hepsini sen ayarla")
+- Kullanıcı klibi KLİPLİNK'te hazırlar → "Claude'a gönder" → sohbete yapıştırır.
+- Saat seçimi bende: günlük slotlar 13:00 · 18:30 · 20:30 · 23:00 (Europe/Istanbul); saat yazılmadıysa sıradaki boş slot.
+  En güçlü klip 20:30'a. Aynı gün içinde paylaş (sıcaklık önemli).
+- Açıklama + 5-7 hashtag bende (kullanıcı yazdıysa onu kullan). TikTok: herkese açık, yorumlar açık. Instagram: Reels.
+- YouTube'a gönderme (kullanıcı yönetiyor; yabancı içerik).
+- Video linkini alır almaz vidIQ'ya yükle (Render dosyaları sunucu uyuyunca siliniyor).
+- Zamanladıktan sonra `kliplink/static/schedule.json` → posts listesine ekle (3D Ofis'te Yayıncı ajanı gösterir).

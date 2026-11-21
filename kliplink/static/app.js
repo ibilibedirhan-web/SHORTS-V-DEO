@@ -43,7 +43,7 @@ gridEl.addEventListener("touchend", (e) => { const c = e.target.closest(".card")
 
 // ---------- tabs ----------
 function show(tab) {
-  document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
+  document.querySelectorAll(".tab[data-tab]").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
   document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("active", p.id === tab));
   if (tab === "editor") requestAnimationFrame(layoutBoxes);
   requestAnimationFrame(moveInd);
@@ -57,7 +57,7 @@ function moveInd() {
 window.addEventListener("resize", moveInd);
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(moveInd);
 setTimeout(moveInd, 300);
-document.querySelectorAll(".tab").forEach((b) => (b.onclick = () => show(b.dataset.tab)));
+document.querySelectorAll(".tab[data-tab]").forEach((b) => (b.onclick = () => show(b.dataset.tab)));
 
 const setStatus = (el, msg, err) => { el.textContent = msg || ""; el.classList.toggle("err", !!err); };
 const fmtTime = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;

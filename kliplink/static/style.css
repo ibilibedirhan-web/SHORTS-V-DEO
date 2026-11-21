@@ -59,6 +59,7 @@ nav { position: relative; display: flex; gap: 4px; flex: 1; flex-wrap: wrap; pad
 nav .tab { position: relative; z-index: 1; flex: 1; justify-content: center; background: transparent; border: 0;
   box-shadow: none; font-weight: 700; color: var(--text); transition: color .25s; }
 nav .tab.active { color: #000; background: transparent; }
+nav a.tab { text-decoration: none; display: inline-flex; align-items: center; padding: 9px 12px; border-radius: 12px; }
 nav .tab:not(:disabled):hover { transform: none; }
 
 /* ---------- kayan bant ---------- */

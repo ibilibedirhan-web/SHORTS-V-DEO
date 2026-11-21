@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KLİPLİNK · Ajan Ofisi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/ofis.css">
+<script>
+  try { const t = localStorage.getItem("kliplink-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body class="office-page">
+<header>
+  <a href="/" class="logo-link" title="Ana sayfa"><h1 class="logo" data-text="KLİPLİNK">KLİPLİNK</h1></a>
+  <nav>
+    <span class="tab-ind" aria-hidden="true"></span>
+    <a class="tab" href="/">Stüdyo</a>
+    <a class="tab active" href="/ofis">3D Ofis</a>
+  </nav>
+  <button id="theme" class="ghost" title="Açık / koyu mod">🌙 Koyu</button>
+</header>
+
+<div id="world">
+  <canvas id="c3d"></canvas>
+  <div id="labels"></div>
+  <div class="hud">
+    <h2>Ajan Ofisi</h2>
+    <div class="hud-row"><span class="dot"></span> <span id="clock">--:--</span> · <span id="hudline">ajanlar uyanıyor…</span></div>
+    <p class="hint">Bir ajana dokun, ne yaptığını gör. Sürükleyerek ofisi döndür.</p>
+  </div>
+  <aside id="panel" class="sheet" hidden>
+    <button id="close" class="ghost" aria-label="Kapat">✕</button>
+    <h3 id="p-title"></h3>
+    <div id="p-body"></div>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="/static/ofis.js"></script>
+</body>
+</html>

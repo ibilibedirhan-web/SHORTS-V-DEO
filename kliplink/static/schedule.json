@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21 12:45",
+  "updated": "2026-11-21 12:50",
   "slots": [
     "13:00",
     "18:30",
@@ -18,17 +18,17 @@
     },
     {
       "time": "18:30",
-      "title": "Hype GTA 6'da \"hayırlı bir iş için\" arabaya el koydu, kadın PANİK ATAK geçirdi 😭",
-      "streamer": "Hype",
-      "status": "scheduled",
-      "kick_clip": "clip_01M7XBF0M3P0G0WKEC8DTG0G1S"
-    },
-    {
-      "time": "20:30",
       "title": "Eray GTA 6 yayınında havuzdaki KAOSU izleyince GÜLMEKTEN YARILDILAR 😂",
       "streamer": "Eray",
       "status": "scheduled",
       "kick_clip": "clip_01M7YFN4G4XFRA91E98J568WY2"
+    },
+    {
+      "time": "20:30",
+      "title": "Hype GTA 6'da \"hayırlı bir iş için\" arabaya el koydu, kadın PANİK ATAK geçirdi 😭",
+      "streamer": "Hype",
+      "status": "scheduled",
+      "kick_clip": "clip_01M7XBF0M3P0G0WKEC8DTG0G1S"
     }
   ],
   "analyst": [

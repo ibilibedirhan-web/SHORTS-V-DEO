@@ -156,6 +156,14 @@ def import_clip():
     return jsonify(meta)
 
 
+@app.get("/api/meta/<sid>")
+def meta_info(sid):
+    sid = re.sub(r"[^\w-]", "", sid)
+    if not (SRC / f"{sid}.mp4").exists() or not meta_path(sid).exists():
+        abort(404)
+    return jsonify(load_meta(sid))
+
+
 @app.post("/api/upload")
 def upload():
     f = request.files.get("file")

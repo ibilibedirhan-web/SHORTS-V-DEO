@@ -6,6 +6,11 @@ Instagram, TikTok ve YouTube Shorts için yayıncı klipleri. Bu kurallar her ye
 - Yayıncıların son 24-48 saatte **en çok izlenen** Kick/Twitch kliplerinden başla
   (`https://kick.com/api/v2/channels/<kanal>/clips?sort=view&time=day|week`,
   Twitch için `yt-dlp --flat-playlist "https://www.twitch.tv/<kanal>/clips?filter=clips&range=7d"`).
+- **Tazelik önce:** 5 yayıncının hepsini her çalışmada tara (`sort=date&time=day` + `sort=view&time=day`);
+  son birkaç saatte oluşturulan klipler öncelikli (yeni klip daha çok izleniyor). Aynı olayı başka sayfalar
+  zaten paylaştıysa geç kalmışız demektir — daha taze olanı seç.
+- **Dağılım: çoğunluk Eray, sonra RRaenee.** Her çalışmada en az 1 klip Eray'dan (iyi aday yoksa RRaenee);
+  günlük 4 klibin ~3'ü Eray + RRaenee, ~1'i wtcN / Hype / Elraenn'den (farklılık için).
 - Hedef: komik, absürt, saçma, izleyeni şaşırtan anlar. Stüdyoda sadece oturup konuşma sahneleri zayıf.
 - Ünlü yayıncılar (500B+ takipçi): RRaenee, Elraenn, Eray, Hype, Ebonivon (+ wtcN, Jahrein); yabancı: Kai Cenat, Adin Ross, IShowSpeed.
 - Çıplaklık / cinsel içerik içeren klipleri ele (YouTube ihlal atar). Mecbursa yoğun blur.
@@ -54,3 +59,17 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
 - YouTube'a gönderme (kullanıcı yönetiyor; yabancı içerik).
 - Video linkini alır almaz vidIQ'ya yükle (Render dosyaları sunucu uyuyunca siliniyor).
 - Zamanladıktan sonra `kliplink/static/schedule.json` → posts listesine ekle (3D Ofis'te Yayıncı ajanı gösterir).
+
+## Onay ve müdahale (kullanıcı kurguyu değiştirebilir)
+- Her taslakla birlikte **✏️ Düzenle** bağlantısı gönder: `python kliplink/draftlink.py '<json>'`
+  (url = Kick klip m3u8, id, channel, start, end, t = başlık, accent, bar, cam, game, cam_fit, layout, name, draft).
+  Kullanıcı bağlantıyı telefonda açar → KLİPLİNK ajanın kurgusuyla açılır → değiştirir → "Claude'a gönder".
+  Gelen mesajda "Değişikliklerim" listesi olur.
+- Kullanıcı sohbette de yazabilir: "onayla", "başlığı şöyle yap: …", "2 sn kısalt", "kamerayı büyüt", "bunu atma" vb.
+  İsteneni uygula, yeniden render et, tekrar göster.
+- **Her düzeltmeden sonra** kalıcı olacak kuralı aşağıdaki "Öğrenilen stil" bölümüne tek satır ekle
+  (tarih + kural, ör. "2026-11-21 · başlıklar 6 kelimeyi geçmesin"), commit + push. Sonraki kurgular buna uyar.
+  Tek seferlik değişiklikleri (ör. belirli bir klibin kesim saniyesi) kural yapma; tekrar edenleri kural yap.
+
+## Öğrenilen stil (kullanıcı düzeltmelerinden)
+- (henüz yok)

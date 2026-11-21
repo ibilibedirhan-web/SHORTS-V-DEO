@@ -170,8 +170,9 @@ const video = $("#video"), stage = $("#stage");
 const slug = (s) => (s || "klip").toLocaleLowerCase("tr").normalize("NFD").replace(/[̀-ͯ]/g, "")
   .replace(/ı/g, "i").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50) || "klip";
 
-function openEditor(meta) {
+function openEditor(meta, preset) {
   state.src = meta;
+  state.draft = null;
   $("#tab-editor").disabled = false;
   $("#ed-title").textContent = "Düzenleyici — " + (meta.name || meta.id);
   video.src = `/api/source/${meta.id}.mp4`;
@@ -189,7 +190,57 @@ function openEditor(meta) {
   updateLen();
   show("editor");
   window.scrollTo(0, 0);
-  detect();
+  if (preset) applyPreset(preset); else detect();
+}
+
+// ---------- ajan taslağını düzenleme (#edit=...) ----------
+function snapshot() {
+  return { start: +$("#start").value, end: +$("#end").value, title: $("#title").value.trim(), accent: $("#accent").value,
+    layout: $("#layout").value, cam_fit: $("#camfit").value, cam: [...state.cam], game: [...state.game],
+    bar: $("#barOn").checked ? $("#bar").value.trim() : "" };
+}
+async function applyPreset(p) {
+  if (p.start != null) $("#start").value = p.start;
+  if (p.end != null) $("#end").value = p.end;
+  if (p.t) $("#title").value = p.t;
+  if (p.accent) $("#accent").value = p.accent;
+  if (p.bar != null) { $("#barOn").checked = !!p.bar; if (p.bar) $("#bar").value = p.bar; }
+  if (p.cam_fit) $("#camfit").value = p.cam_fit;
+  if (p.layout) $("#layout").value = p.layout;
+  stage.classList.toggle("blur", $("#layout").value === "blur");
+  if (p.name) $("#name").value = p.name;
+  if (p.cam) { state.cam = p.cam; state.win = p.cam; state.game = p.game || state.game; layoutBoxes();
+    $("#detect-msg").textContent = "Ajanın kurgusu yüklendi — istediğini değiştir."; }
+  else { await detect(); if (p.cam_fit) { $("#camfit").value = p.cam_fit; $("#camfit").onchange(); } }
+  updateLen();
+  state.draft = { id: p.draft || p.name || "", ...snapshot() };
+}
+function draftDiff() {
+  if (!state.draft) return "";
+  const a = state.draft, b = snapshot(), out = [];
+  if (a.start !== b.start || a.end !== b.end) out.push(`süre ${a.start}-${a.end} sn → ${b.start}-${b.end} sn (${(a.end - a.start).toFixed(1)} → ${(b.end - b.start).toFixed(1)} sn)`);
+  if (a.title !== b.title) out.push(`başlık "${a.title}" → "${b.title}"`);
+  if (a.accent !== b.accent) out.push(`isim rengi ${a.accent} → ${b.accent}`);
+  if (a.layout !== b.layout) out.push(`düzen ${a.layout} → ${b.layout}`);
+  if (a.cam_fit !== b.cam_fit) out.push(`kamera ${a.cam_fit} → ${b.cam_fit}`);
+  if (a.cam.join() !== b.cam.join()) out.push(`kamera kutusu [${a.cam}] → [${b.cam}]`);
+  if (a.game.join() !== b.game.join()) out.push(`oyun kutusu [${a.game}] → [${b.game}]`);
+  if (a.bar !== b.bar) out.push(`şerit "${a.bar}" → "${b.bar}"`);
+  return `\nTaslak: ${a.id}\nDeğişikliklerim (stilime ekle):\n` + (out.length ? out.map((x) => "- " + x).join("\n") : "- değişiklik yok");
+}
+async function openDraftFromHash() {
+  const m = location.hash.match(/^#edit=(.+)$/);
+  if (!m) return;
+  try {
+    const b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+    const p = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    setStatus($("#status"), "Ajanın taslağı açılıyor, klip indiriliyor…");
+    const meta = p.sid ? await api(`/api/meta/${p.sid}`).catch(() => null) : null;
+    const m2 = meta || await api("/api/import", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: p.url, id: p.id, channel: p.channel, title: p.clip || p.t || p.id }) });
+    setStatus($("#status"), "");
+    openEditor(m2, p);
+  } catch (e) { setStatus($("#status"), "Taslak açılamadı: " + e.message, true); }
 }
 
 async function detect() {
@@ -442,7 +493,7 @@ function showResult(file) {
   $("#copy").onclick = copy;
   $("#toClaude").onclick = async () => {
     const link = new URL(url, location.href).href;
-    const msg = `Bu klibi paylaş:\nVideo: ${link}\nAçıklama:\n${$("#caption").value}`;
+    const msg = `Bu klibi paylaş:\nVideo: ${link}\nAçıklama:\n${$("#caption").value}${draftDiff()}`;
     try { await navigator.clipboard.writeText(msg); }
     catch (e) { const t = document.createElement("textarea"); t.value = msg; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
     setStatus($("#sstatus"), "Kopyalandı ✔ Claude sohbetine yapıştır, istersen saat de yaz (ör. 20:30). Video sunucuda birkaç saat durur, beklemeden gönder.");
@@ -465,3 +516,5 @@ function showResult(file) {
 }
 
 loadClips();
+openDraftFromHash();
+window.addEventListener("hashchange", openDraftFromHash);

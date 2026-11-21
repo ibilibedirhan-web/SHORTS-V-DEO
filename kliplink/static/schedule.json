@@ -1,12 +1,29 @@
 {
-  "updated": "2026-11-21 10:45",
+  "updated": "2026-11-21 11:55",
   "slots": [
     "13:00",
     "18:30",
     "20:30",
     "23:00"
   ],
-  "posts": [],
+  "posts": [
+    {
+      "time": "11:52",
+      "title": "Eray GTA 6 oynarken yayın evini ÖZEL HAREKAT kılıklı ekip BASTI 😳",
+      "streamer": "Eray",
+      "status": "published",
+      "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710539133172698388",
+      "instagram": "https://www.instagram.com/reel/Df_zeT_D3Ty/",
+      "kick_clip": "clip_01M7X5S5DVDB21E21NCEWJEYNT"
+    },
+    {
+      "time": "18:30",
+      "title": "Eray GTA 6'da 3 YILDIZLA polisten kaçarken ortalık SAVAŞ ALANINA döndü 😳",
+      "streamer": "Eray",
+      "status": "waiting",
+      "kick_clip": "clip_01M7YCTW8394P9VCSJHNQ867VV"
+    }
+  ],
   "analyst": [
     "Lucia klibi 7.014 izlenme (%87 ARAMA, 20 saattir hâlâ geliyor) · Sercan klibi 1.515 (%98 Sizin İçin, 4 saatte durdu).",
     "Fark: aranan kelime. 'GTA 6 + Eray + Lucia' aranıyor, uzun süre izlenme getiriyor; 'SercanZurna' bitişik yazılmış ve 'GTA 6' yok, aramadan hiç gelmedi.",

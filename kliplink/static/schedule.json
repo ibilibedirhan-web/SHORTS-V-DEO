@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21 10:40",
+  "updated": "2026-11-21 10:45",
   "slots": [
     "13:00",
     "18:30",
@@ -8,11 +8,11 @@
   ],
   "posts": [],
   "analyst": [
-    "TikTok 'Eray Lucia'ya aşık oldu': 19 saatte 7.014 izlenme — %87'si ARAMADAN geldi, Sizin İçin sadece %13.",
-    "İnsanlar 'Eray GTA 6 Lucia' diye arıyor → başlık + açıklamanın ilk satırına aranan kelimeler: yayıncı + GTA 6 + karakter/olay adı.",
-    "Çoğu izleyici 1. saniyede çıkıyor → klip en vurucu anla başlasın, ilk karede tepki/aksiyon olsun.",
-    "0 yorum, 7.000 izlenmede 1 takipçi → ekranda soru + 'devamı profilde' ve Eray'la seri başlık.",
-    "Kitle: %50 kadın, %85'i 18-34, %92 Türkiye → Lucia/ilişki/drama hikâyeleri ve RRaenee klipleri bu kitleye uygun."
+    "Lucia klibi 7.014 izlenme (%87 ARAMA, 20 saattir hâlâ geliyor) · Sercan klibi 1.515 (%98 Sizin İçin, 4 saatte durdu).",
+    "Fark: aranan kelime. 'GTA 6 + Eray + Lucia' aranıyor, uzun süre izlenme getiriyor; 'SercanZurna' bitişik yazılmış ve 'GTA 6' yok, aramadan hiç gelmedi.",
+    "İkisinde de izleyicinin çoğu 1. saniyede çıkıyor → en büyük kayıp burada: klip doruk anla başlasın.",
+    "Sercan klibi beğeni oranı daha iyi (%1,5 / %0,36) ama 0 paylaşım → keşfet itmeyi bıraktı. Paylaşılabilir (ilişkilendirilebilir) anlar seç.",
+    "11 sn klip %61, 21 sn klip %52 izlendi → 10-15 sn hedefle."
   ],
   "tiktok": [
     {
@@ -51,6 +51,29 @@
         "TR": 92.4,
         "AZ": 4.9
       }
+    },
+    {
+      "t": "2026-11-21 10:38",
+      "title": "SercanZurna POLİSTEN KAÇIYOR AMA...",
+      "posted": "2026-11-20 23:48",
+      "age_h": 11,
+      "len_s": 21,
+      "views": 1515,
+      "likes": 23,
+      "comments": 0,
+      "shares": 0,
+      "saves": 1,
+      "new_followers": 0,
+      "avg_watch_s": 11.0,
+      "full_watch_pct": 29.63,
+      "avg_pct": 52,
+      "drop_at": "0:01",
+      "traffic": {
+        "foryou": 98.5,
+        "search": 0.9,
+        "profile": 0.6
+      },
+      "curve": "zirve paylaşımdan ~1-2 saat sonra (~1.1K/saat), 4. saatten sonra durdu"
     }
   ]
 }

@@ -87,4 +87,9 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
   sinematik/durgun açılış kareyle başlama. 10-15 sn ideal (11 sn klip %61 izlendi).
 - 2026-11-21 · Yorum 0, takipçi dönüşümü çok düşük: açıklamada tartışma açan soru ("Eray haklı mı? 👇"),
   seri başlık kalıbı ("Eray GTA 6'da …" serisi) ve sonda "devamı profilde".
+- 2026-11-21 · (2 video karşılaştırması) Aramadan gelen klip 20 saat boyunca izlenmeye devam etti (7K); sadece
+  keşfetten gelen klip 4 saatte durdu (1,5K). Her başlıkta "GTA 6" + en çok aranan isim (Eray) olsun; misafir
+  ismini ayrı ve doğru yaz ("Sercan Zurna", asla "SercanZurna"). Ör: "[Eray] GTA 6'da Sercan Zurna ile polisten kaçarken…"
+- 2026-11-21 · Paylaşım = keşfet itişi: 0 paylaşımlı klip söndü. İzleyicinin arkadaşına atacağı anları seç
+  (ilişki, utanç, absürt kaza, "tam bizim grup" anları).
 - 2026-11-21 · Kitle %50 kadın, 18-34 yaş, %92 Türkiye: ilişki/drama/Lucia hikâyeleri ve RRaenee iyi gider.

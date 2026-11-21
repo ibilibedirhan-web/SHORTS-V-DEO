@@ -96,4 +96,7 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
   gülmekten yarıldığı, tepki verdiği anlar (kahkaha, şok, utanç) + absürt NPC tepkileri (Hype panik atak klibi seçildi).
   Kahkaha bulmak için: klip başlığında klavye ezmesi (ASDFG…) + kamera karelerinde açık ağız/el kaldırma; Whisper kahkahayı yazmıyor.
 - 2026-11-21 · Kullanıcı paylaşım aralığına dikkat ediyor ("algoritmaya göre"): aynı hesaba arka arkaya atma, en az ~3 saat ara.
+- 2026-11-21 · Facecam küçük pencere olarak görünüyorsa (oyun/drone/başka görüntü üzerinde) HER ZAMAN üst düzen:
+  kamera penceresi (içindeki herkes) üstte, görüntü altta. Tam ekran "bulanık arka plan" düzenini sadece kamera hiç yoksa kullan.
+  Klip içinde yayın düzeni değişip kamera kayarsa o noktadan önce kes.
 - 2026-11-21 · Kitle %50 kadın, 18-34 yaş, %92 Türkiye: ilişki/drama/Lucia hikâyeleri ve RRaenee iyi gider.

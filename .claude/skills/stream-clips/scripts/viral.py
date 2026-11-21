@@ -30,7 +30,8 @@ for c in spec:
                    if want_caps else ([], c["lang"]))
     ass = subs.write(words, length, tmp / "subs.ass", cfg, lang or c["lang"])
     title = tmp / "title.png"
-    titlecard.render(c["title"], {**cfg, "title_accent": c.get("accent", cfg["title_accent"])}, title)
+    titlecard.render(c["title"], {**cfg, "title_accent": c.get("accent", cfg["title_accent"]),
+                                  "title_size": c.get("title_size", cfg["title_size"])}, title)
     bar = tmp / "bar.png"
     if c.get("bar"):        # e.g. "KICK.COM/ERAY": black strip under the cam, platform word in its colour
         from PIL import Image, ImageDraw, ImageFont

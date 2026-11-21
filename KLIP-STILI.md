@@ -99,4 +99,8 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
 - 2026-11-21 · Facecam küçük pencere olarak görünüyorsa (oyun/drone/başka görüntü üzerinde) HER ZAMAN üst düzen:
   kamera penceresi (içindeki herkes) üstte, görüntü altta. Tam ekran "bulanık arka plan" düzenini sadece kamera hiç yoksa kullan.
   Klip içinde yayın düzeni değişip kamera kayarsa o noktadan önce kes.
+- 2026-11-21 · Yabancı yayıncılar (Kai, Speed, Adin) SADECE YouTube @raynaxclips'e gider (TikTok/IG'ye değil),
+  ABD prime time'a planlanır. Kaynakta yayının kendi altyazısı varsa bizim altyazıyı ekleme ("captions": false).
+  Başlık kutusu küçük olsun (title_size 44, en fazla 3 satır) ki ekran görünsün.
+- 2026-11-21 · Kullanıcı Kai'nin karanlık/net olmayan Skunk Ape klibini beğenmedi: olay görüntüde net görünmeli.
 - 2026-11-21 · Kitle %50 kadın, 18-34 yaş, %92 Türkiye: ilişki/drama/Lucia hikâyeleri ve RRaenee iyi gider.

@@ -60,6 +60,14 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
 - Video linkini alır almaz vidIQ'ya yükle (Render dosyaları sunucu uyuyunca siliniyor).
 - Zamanladıktan sonra `kliplink/static/schedule.json` → posts listesine ekle (3D Ofis'te Yayıncı ajanı gösterir).
 
+## Analist (her çalışmada)
+- Instagram: `vidiq_instagram_owner_insights` (ücretsiz, video başı izlenme/izlenme oranı).
+- TikTok: herkese açık profil sayfası `https://www.tiktok.com/@raynaxclips` → `__UNIVERSAL_DATA_FOR_REHYDRATION__`
+  içindeki `userInfo.stats` (takipçi, toplam beğeni, video sayısı). `schedule.json` → `tiktok` listesine ekle, önceki
+  kayıtla karşılaştır (son çalışmadan beri +takipçi, +beğeni). Video başı izlenme yok (vidIQ kredisi 0, 19 Aralık'ta yenilenir);
+  kullanıcı TikTok Analiz ekran görüntüsü atarsa onu oku.
+- Bulguları `analyst` maddelerine yaz (3-5 madde, sayılarla) ve klip seçimini buna göre ayarla.
+
 ## Onay ve müdahale (kullanıcı kurguyu değiştirebilir)
 - Her taslakla birlikte **✏️ Düzenle** bağlantısı gönder: `python kliplink/draftlink.py '<json>'`
   (url = Kick klip m3u8, id, channel, start, end, t = başlık, accent, bar, cam, game, cam_fit, layout, name, draft).

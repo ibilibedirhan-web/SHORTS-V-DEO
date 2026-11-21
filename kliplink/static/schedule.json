@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21 12:50",
+  "updated": "2026-11-21 13:20",
   "slots": [
     "13:00",
     "18:30",
@@ -29,6 +29,14 @@
       "streamer": "Hype",
       "status": "scheduled",
       "kick_clip": "clip_01M7XBF0M3P0G0WKEC8DTG0G1S"
+    },
+    {
+      "time": "23:00",
+      "title": "IShowSpeed OVERWROTE His 100% GTA 6 Save After 50 HOURS 😭",
+      "streamer": "IShowSpeed",
+      "status": "scheduled",
+      "platform": "YouTube",
+      "youtube": "https://www.youtube.com/watch?v=mOieuBrIMy4"
     }
   ],
   "analyst": [

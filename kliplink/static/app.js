@@ -403,6 +403,7 @@ function showResult(file) {
     <div class="row">
       <button class="primary" id="share">📤 Paylaş (TikTok / Instagram / YouTube)</button>
       <button class="ghost" id="copy">📋 Açıklamayı kopyala</button>
+      <button class="ghost" id="toClaude">🤖 Claude'a gönder</button>
       <a class="ghost btn" href="${url}?dl=1" download>⬇︎ Videoyu indir</a>
     </div>
     <p class="hint">“Paylaş” telefonun paylaşım menüsünü açar: uygulamayı seç, açıklama panoya kopyalanmış olur, yapıştırman yeterli.
@@ -415,6 +416,13 @@ function showResult(file) {
     setStatus($("#sstatus"), "Açıklama kopyalandı ✔");
   };
   $("#copy").onclick = copy;
+  $("#toClaude").onclick = async () => {
+    const link = new URL(url, location.href).href;
+    const msg = `Bu klibi paylaş:\nVideo: ${link}\nAçıklama:\n${$("#caption").value}`;
+    try { await navigator.clipboard.writeText(msg); }
+    catch (e) { const t = document.createElement("textarea"); t.value = msg; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+    setStatus($("#sstatus"), "Kopyalandı ✔ Claude sohbetine yapıştır, istersen saat de yaz (ör. 20:30). Video sunucuda birkaç saat durur, beklemeden gönder.");
+  };
   $("#share").onclick = async () => {
     const st = $("#sstatus");
     await copy();

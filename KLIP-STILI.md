@@ -109,6 +109,8 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
 - 2026-11-21 · Kullanıcı Kai'nin karanlık/net olmayan Skunk Ape klibini beğenmedi: olay görüntüde net görünmeli.
 - 2026-11-22 · Kullanıcı Eray'ın oyun içi "uzaylı buldu" klibini beğenmedi; yayına ünlü konuk gelince
   (ör. Deniz Aksoy) konuğun olduğu komik anı tercih ediyor. Ünlü adı başlık + hashtag'e (aranan isim).
+- 2026-11-22 · 114K'lık klip analizi: 24 sn'de izleyicinin %62'si sona gelmedi → yeni klipler 18-20 sn hedef.
+  (Kullanıcı sadece bunu onayladı; pin/yorum/seri/"devamı profilde" önerilerini İSTEMEDİ — önerme.)
 - 2026-11-22 · Kullanıcı TikTok'u VE Instagram'ı KENDİSİ paylaşıyor. Ajan hiçbir platformda zamanlama yapmaz;
   klip dosyasını + kopyalanabilir açıklamayı (TikTok ve Instagram için) gönderir, saat önerir. Paylaşımdan sonra kontrol eder.
 - 2026-11-22 · 🚀 İLK VİRAL: Deniz Aksoy + Eray araba klibi TikTok'ta 3,5 saatte 42.8K izlenme, 186 paylaşım.

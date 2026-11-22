@@ -41,6 +41,12 @@
 .tag.tt { background: #000; color: #fff; } .tag.ig { background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af); color: #fff; }
 .tag.ok { background: #2bd463; color: #000; } .tag.wait { background: var(--accent); color: #000; }
 
+.an-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin: 8px 0 12px; }
+.an-card { background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; }
+.an-card b { font-size: 20px; }
+.sheet h4 { margin: 12px 0 6px; }
+.sheet li a { color: var(--text); font-weight: 600; }
+
 @media (max-width: 700px) {
   #world { height: calc(100dvh - 120px); }
   .hud { left: 12px; top: 10px; right: 12px; }

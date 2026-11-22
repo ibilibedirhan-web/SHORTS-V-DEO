@@ -67,6 +67,10 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
   kayıtla karşılaştır (son çalışmadan beri +takipçi, +beğeni). Video başı izlenme yok (vidIQ kredisi 0, 19 Aralık'ta yenilenir);
   kullanıcı TikTok Analiz ekran görüntüsü atarsa onu oku.
 - Bulguları `analyst` maddelerine yaz (3-5 madde, sayılarla) ve klip seçimini buna göre ayarla.
+- **Her çalışmada** `vidiq_instagram_owner_insights` (reels) sonucunu `schedule.json` → `instagram` listesine yaz
+  (code, title, views, watched, skip, shares, saves, dur, url) + `instagram_at`. 3D Ofis'teki Analist (`/api/analyst`)
+  TikTok ve Kick'i canlı çeker, Instagram'ı bu listeden okur ve önerileri kendisi üretir (`kliplink/analyst.py`).
+- `posts` girdilerine `date` (YYYY-MM-DD) ekle; Analist boş saati buna göre bulur.
 
 ## Onay ve müdahale (kullanıcı kurguyu değiştirebilir)
 - Her taslakla birlikte **✏️ Düzenle** bağlantısı gönder: `python kliplink/draftlink.py '<json>'`

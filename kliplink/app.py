@@ -27,6 +27,8 @@ for d in (SRC, OUT, WORK):
 # Başlık kartı (renkli [isim] + emoji) stream-clips becerisinden gelir.
 sys.path.insert(0, str(HERE.parent / ".claude" / "skills" / "stream-clips" / "scripts"))
 from sc import titlecard  # noqa: E402
+sys.path.insert(0, str(HERE))
+import analyst  # noqa: E402
 
 # Çıkış genişliği: bilgisayarda 1080 (1080x1920). Zayıf ücretsiz sunucularda OUT_W=720 ile 720x1280.
 W = int(os.environ.get("OUT_W", 1080)) // 2 * 2
@@ -550,8 +552,7 @@ def office_page():
     return send_from_directory(HERE / "static", "ofis.html")
 
 
-@app.get("/api/office")
-def office():
+def office_streamers():
     now = time.time()
     if not _office_cache["data"] or now - _office_cache["t"] > 90:
         streamers = []
@@ -569,12 +570,27 @@ def office():
                 item["error"] = str(e)[:80]
             streamers.append(item)
         _office_cache.update(t=now, data=streamers)
+    return _office_cache["data"]
+
+
+def load_plan():
+    try:
+        return json.loads((HERE / "static" / "schedule.json").read_text())
+    except Exception:
+        return {}
+
+
+@app.get("/api/analyst")
+def analyst_api():
+    return jsonify(analyst.report(load_plan(), office_streamers()))
+
+
+@app.get("/api/office")
+def office():
+    office_streamers()
     running = [j for j in jobs.values() if j.get("status") == "running"]
     done = sorted((j for j in jobs.values() if j.get("status") == "done"), key=lambda j: j.get("started", 0))
-    try:
-        plan = json.loads((HERE / "static" / "schedule.json").read_text())
-    except Exception:
-        plan = {}
+    plan = load_plan()
     return jsonify(streamers=_office_cache["data"], running=len(running),
                    running_step=running[-1]["step"] if running else "",
                    last_file=done[-1]["file"] if done else "", rendered=len(done), plan=plan)

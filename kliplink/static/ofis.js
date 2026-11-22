@@ -205,13 +205,21 @@ async function load() {
   } catch (e) { $("#hudline").textContent = "sunucuya ulaşılamadı"; return; }
   const live = DATA.streamers.filter((s) => s.live);
   const plan = DATA.plan || {}, posts = plan.posts || [];
-  const next = posts.find((p) => p.status !== "paylaşıldı");
+  const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Istanbul" });
+  const next = posts.find((p) => !["paylaşıldı", "published"].includes(p.status) && (p.date || today) >= today);
   setLabel("hunter", live.length ? `🔴 ${live.map((s) => s.name).join(", ")} canlı` : "yayıncılar izleniyor", live.length);
   setLabel("editor", DATA.running ? "video kesiliyor…" : DATA.last_file ? "son klip hazır ✔" : "klip bekliyor", DATA.running);
   setLabel("publisher", next ? `${next.time} · ${next.title}` : "sıradaki klibi bekliyor", !!next);
-  setLabel("analyst", (plan.analyst || [])[0] ? "rapor hazır" : "veri topluyor", false);
+  loadAnalyst();
   $("#hudline").textContent = `${live.length} yayıncı canlı · ${posts.length} zamanlanmış paylaşım`;
   if (!$("#panel").hidden && $("#panel").dataset.agent) openPanel($("#panel").dataset.agent);
+}
+let AN = null;
+async function loadAnalyst() {
+  try { AN = await (await fetch("/api/analyst")).json(); }
+  catch (e) { setLabel("analyst", "veri alınamadı", false); return; }
+  setLabel("analyst", `${AN.tips.length} öneri · ${AN.now}`, true);
+  if (!$("#panel").hidden && $("#panel").dataset.agent === "analyst") openPanel("analyst");
 }
 setInterval(load, 30000); load();
 setInterval(() => { $("#clock").textContent = new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Istanbul" }); }, 1000);
@@ -241,10 +249,18 @@ function openPanel(id) {
       (posts.length ? posts.map((x) => `<li><span class="tag ${x.status === "paylaşıldı" ? "ok" : "wait"}">${esc(x.status || "zamanlandı")}</span>
         <b>${esc(x.time)}</b> — ${esc(x.title)}<div class="m">${(x.platforms || []).map((pl) => `<span class="tag ${pl === "TikTok" ? "tt" : "ig"}">${esc(pl)}</span>`).join("")}</div></li>`).join("")
         : `<li>Henüz zamanlanmış paylaşım yok.</li>`) + `</ul>`;
+  } else if (!AN) {
+    html = `<p class="hint">Veriler çekiliyor…</p>`; loadAnalyst();
   } else {
-    html = `<ul>${(plan.analyst || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>Veri bekleniyor.</li>"}</ul>
-      <p class="hint">Son güncelleme: ${esc(plan.updated || "-")}</p>`;
+    const delta = (c) => c.d ? `<span class="tag ${c.d > 0 ? "ok" : "live"}">${c.d > 0 ? "+" : ""}${fmt(c.d)}</span>` : "";
+    html = `<p class="hint">${AN.tiktok_live ? "🟢 Canlı veri" : "🟡 TikTok'a şu an ulaşılamadı, son kayıt gösteriliyor"} · ${esc(AN.now)}
+        <button class="ghost" id="an-refresh" style="padding:2px 8px;margin-left:6px">↻ Yenile</button></p>
+      <div class="an-cards">${AN.cards.map((c) => `<div class="an-card"><div class="m">${esc(c.k)}</div><b>${fmt(c.v)}</b> ${delta(c)}</div>`).join("")}</div>
+      <h4>💡 Öneriler</h4><ul>${AN.tips.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+      ${AN.top.length ? `<h4>🏆 En iyi Reels</h4><ul>${AN.top.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a>
+        <div class="m">${fmt(r.views)} izlenme · %${r.watched} izlenme oranı</div></li>`).join("")}</ul>` : ""}`;
   }
   $("#p-body").innerHTML = html;
 }
+document.addEventListener("click", (e) => { if (e.target.id === "an-refresh") { AN = null; openPanel("analyst"); } });
 $("#close").onclick = () => { $("#panel").hidden = true; $("#panel").dataset.agent = ""; };

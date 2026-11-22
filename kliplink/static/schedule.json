@@ -57,9 +57,19 @@
       "time": "13:00",
       "title": "Eray Deniz Aksoy yanındayken GTA 6'da araba sürmeye çalıştı 😅",
       "streamer": "Eray",
-      "status": "scheduled",
+      "status": "published",
       "platform": "Instagram (Claude) + TikTok (kullanıcı)",
-      "kick_clip": "vod 139338251 @16263s"
+      "kick_clip": "vod 139338251 @16263s",
+      "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710906492999716097",
+      "instagram": "https://www.instagram.com/reel/DgCiyfxFKg3/",
+      "tiktok_stats": {
+        "at": "14:44",
+        "views": 42800,
+        "likes": 744,
+        "shares": 186,
+        "saves": 84,
+        "comments": 6
+      }
     },
     {
       "date": "2026-11-22",
@@ -68,14 +78,21 @@
       "streamer": "Eray",
       "status": "scheduled",
       "kick_clip": "vod 139338251 @16378s"
+    },
+    {
+      "date": "2026-11-22",
+      "time": "21:00",
+      "title": "Eray, GTA 6'da Lucia'yı Deniz Aksoy'a benzetmeye çalıştı 😳",
+      "streamer": "Eray",
+      "status": "waiting",
+      "kick_clip": "vod 139338251 @18069s"
     }
   ],
   "analyst": [
-    "Lucia klibi 7.014 izlenme (%87 ARAMA, 20 saattir hâlâ geliyor) · Sercan klibi 1.515 (%98 Sizin İçin, 4 saatte durdu).",
-    "Fark: aranan kelime. 'GTA 6 + Eray + Lucia' aranıyor, uzun süre izlenme getiriyor; 'SercanZurna' bitişik yazılmış ve 'GTA 6' yok, aramadan hiç gelmedi.",
-    "İkisinde de izleyicinin çoğu 1. saniyede çıkıyor → en büyük kayıp burada: klip doruk anla başlasın.",
-    "Sercan klibi beğeni oranı daha iyi (%1,5 / %0,36) ama 0 paylaşım → keşfet itmeyi bıraktı. Paylaşılabilir (ilişkilendirilebilir) anlar seç.",
-    "11 sn klip %61, 21 sn klip %52 izlendi → 10-15 sn hedefle."
+    "🚀 Deniz Aksoy araba klibi TikTok'ta 3,5 saatte 42.800 izlenme, 744 beğeni, 186 paylaşım (önceki rekor 2.779).",
+    "Paylaşım/beğeni oranı 1/4 — ünlü konuk + Eray + GTA 6 kombinasyonu en güçlü format.",
+    "Instagram'da aynı klip %79 izlenme, %15 geçme: 24 sn olsa da sonuna kadar izleniyor.",
+    "Ünlü konuklu yayınlar öncelikli kaynak; açıklamalar kısa, tek satır + soru + #yayındankesitler."
   ],
   "tiktok": [
     {

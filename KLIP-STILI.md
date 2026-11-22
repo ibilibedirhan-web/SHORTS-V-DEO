@@ -109,6 +109,8 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
 - 2026-11-21 · Kullanıcı Kai'nin karanlık/net olmayan Skunk Ape klibini beğenmedi: olay görüntüde net görünmeli.
 - 2026-11-22 · Kullanıcı Eray'ın oyun içi "uzaylı buldu" klibini beğenmedi; yayına ünlü konuk gelince
   (ör. Deniz Aksoy) konuğun olduğu komik anı tercih ediyor. Ünlü adı başlık + hashtag'e (aranan isim).
+- 2026-11-22 · 🚀 İLK VİRAL: Deniz Aksoy + Eray araba klibi TikTok'ta 3,5 saatte 42.8K izlenme, 186 paylaşım.
+  Ünlü konuklu yayınlar EN ÖNCELİKLİ kaynak. Açıklama kısa: tek satır olay + soru + #yayındankesitler (kullanıcının yazdığı format).
 - 2026-11-22 · Kullanıcının istediği komik an tipi: yayıncı oyun oynarken yanındaki konuk/ünlü yüzünden
   heyecanlanıyor, utanıyor, lafı karışıyor, oyunu unutuyor (ör. Eray, Deniz Aksoy yanında kulübe gitmeye utandı).
   Bunu bulmak için VOD'un konuklu bölümünü 360p indir, Whisper ile dök, "gitmeyelim / niye gülüyorsunuz / konsantre

@@ -111,6 +111,8 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
   (ör. Deniz Aksoy) konuğun olduğu komik anı tercih ediyor. Ünlü adı başlık + hashtag'e (aranan isim).
 - 2026-11-22 · 🚀 İLK VİRAL: Deniz Aksoy + Eray araba klibi TikTok'ta 3,5 saatte 42.8K izlenme, 186 paylaşım.
   Ünlü konuklu yayınlar EN ÖNCELİKLİ kaynak. Açıklama kısa: tek satır olay + soru + #yayındankesitler (kullanıcının yazdığı format).
+- 2026-11-22 · Kullanıcı 28 sn'lik kuaför (Lucia'yı Deniz'e benzetme) klibini "uzun ve tutmaz" buldu. Konuk klipleri
+  ≤20 sn, tek bir punchline'a giden diyalog olsun (soru → ters köşe cevap → tepki); gerekirse ortadaki boşluğu kes.
 - 2026-11-22 · Kullanıcının istediği komik an tipi: yayıncı oyun oynarken yanındaki konuk/ünlü yüzünden
   heyecanlanıyor, utanıyor, lafı karışıyor, oyunu unutuyor (ör. Eray, Deniz Aksoy yanında kulübe gitmeye utandı).
   Bunu bulmak için VOD'un konuklu bölümünü 360p indir, Whisper ile dök, "gitmeyelim / niye gülüyorsunuz / konsantre

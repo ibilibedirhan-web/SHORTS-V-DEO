@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22 08:55",
+  "updated": "2026-11-22 18:48",
   "slots": [
     "13:00",
     "18:30",
@@ -63,12 +63,12 @@
       "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710906492999716097",
       "instagram": "https://www.instagram.com/reel/DgCiyfxFKg3/",
       "tiktok_stats": {
-        "at": "14:44",
-        "views": 42800,
-        "likes": 744,
-        "shares": 186,
-        "saves": 84,
-        "comments": 6
+        "at": "18:48",
+        "views": 142200,
+        "likes": 3065,
+        "shares": 582,
+        "saves": 358,
+        "comments": 22
       }
     },
     {
@@ -91,7 +91,7 @@
     }
   ],
   "analyst": [
-    "🚀 Deniz Aksoy araba klibi TikTok'ta 3,5 saatte 42.800 izlenme, 744 beğeni, 186 paylaşım (önceki rekor 2.779).",
+    "🚀 Deniz Aksoy araba klibi TikTok'ta 7,5 saatte 142.200 izlenme, 3.065 beğeni, 582 paylaşım, 358 kaydetme.",
     "Paylaşım/beğeni oranı 1/4 — ünlü konuk + Eray + GTA 6 kombinasyonu en güçlü format.",
     "Instagram'da aynı klip %79 izlenme, %15 geçme: 24 sn olsa da sonuna kadar izleniyor.",
     "Ünlü konuklu yayınlar öncelikli kaynak; açıklamalar kısa, tek satır + soru + #yayındankesitler."
@@ -102,6 +102,12 @@
       "followers": 1,
       "likes": 163,
       "videos": 6
+    },
+    {
+      "t": "2026-11-22 18:48",
+      "followers": 43,
+      "likes": null,
+      "videos": null
     }
   ],
   "tiktok_videos": [

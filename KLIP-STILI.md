@@ -109,6 +109,10 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
 - 2026-11-21 · Kullanıcı Kai'nin karanlık/net olmayan Skunk Ape klibini beğenmedi: olay görüntüde net görünmeli.
 - 2026-11-22 · Kullanıcı Eray'ın oyun içi "uzaylı buldu" klibini beğenmedi; yayına ünlü konuk gelince
   (ör. Deniz Aksoy) konuğun olduğu komik anı tercih ediyor. Ünlü adı başlık + hashtag'e (aranan isim).
+- 2026-11-22 · Kullanıcının istediği komik an tipi: yayıncı oyun oynarken yanındaki konuk/ünlü yüzünden
+  heyecanlanıyor, utanıyor, lafı karışıyor, oyunu unutuyor (ör. Eray, Deniz Aksoy yanında kulübe gitmeye utandı).
+  Bunu bulmak için VOD'un konuklu bölümünü 360p indir, Whisper ile dök, "gitmeyelim / niye gülüyorsunuz / konsantre
+  olamıyorum / utandım" gibi anları ara, kamerada tepkiyi doğrula, 1080p60'tan kes. Gerekirse 2-3 parçayı birleştir.
 - 2026-11-22 · Kick klibi olayın ortasında bitebilir (kullanıcı: "güldüğü kısım yok"). Punchline/gülme klipte
   yoksa VOD'dan devamını al: `api/v2/clips/<id>` → `vod_starts_at` + `vod.id`, `api/v1/video/<vod.id>` → `source` m3u8,
   `ffmpeg -ss <vod_starts_at-5> -t 70`. Klibi soruyla başlat, tepkiyle bitir.

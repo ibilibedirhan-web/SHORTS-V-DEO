@@ -1,269 +1,296 @@
 {
-  "updated": "2026-11-22 18:48",
-  "slots": [
-    "13:00",
-    "18:30",
-    "20:30",
-    "23:00"
-  ],
-  "posts": [
-    {
-      "time": "11:52",
-      "title": "Eray GTA 6 oynarken yayın evini ÖZEL HAREKAT kılıklı ekip BASTI 😳",
-      "streamer": "Eray",
-      "status": "published",
-      "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710539133172698388",
-      "instagram": "https://www.instagram.com/reel/Df_zeT_D3Ty/",
-      "kick_clip": "clip_01M7X5S5DVDB21E21NCEWJEYNT",
-      "date": "2026-11-21"
-    },
-    {
-      "time": "18:30",
-      "title": "Eray GTA 6 yayınında havuzdaki KAOSU izleyince GÜLMEKTEN YARILDILAR 😂",
-      "streamer": "Eray",
-      "status": "published",
-      "kick_clip": "clip_01M7YFN4G4XFRA91E98J568WY2",
-      "instagram": "https://www.instagram.com/reel/DgAjkKcjTI8/",
-      "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710647453460057365",
-      "date": "2026-11-21"
-    },
-    {
-      "time": "20:30",
-      "title": "Hype GTA 6'da \"hayırlı bir iş için\" arabaya el koydu, kadın PANİK ATAK geçirdi 😭",
-      "streamer": "Hype",
-      "status": "scheduled",
-      "kick_clip": "clip_01M7XBF0M3P0G0WKEC8DTG0G1S",
-      "date": "2026-11-21"
-    },
-    {
-      "time": "23:00",
-      "title": "IShowSpeed OVERWROTE His 100% GTA 6 Save After 50 HOURS 😭",
-      "streamer": "IShowSpeed",
-      "status": "scheduled",
-      "platform": "YouTube",
-      "youtube": "https://www.youtube.com/watch?v=mOieuBrIMy4",
-      "date": "2026-11-21"
-    },
-    {
-      "time": "23:00",
-      "title": "wtcN GTA 6'da \"seremoni yapalım\" deyip çatıdan ATLADI… sonuç: WASTED 😭",
-      "streamer": "wtcN",
-      "status": "scheduled",
-      "kick_clip": "clip_01M7Z90C70S4KW4FREW798V84Q",
-      "date": "2026-11-21"
-    },
-    {
-      "date": "2026-11-22",
-      "time": "13:00",
-      "title": "Eray Deniz Aksoy yanındayken GTA 6'da araba sürmeye çalıştı 😅",
-      "streamer": "Eray",
-      "status": "published",
-      "platform": "Instagram (Claude) + TikTok (kullanıcı)",
-      "kick_clip": "vod 139338251 @16263s",
-      "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710906492999716097",
-      "instagram": "https://www.instagram.com/reel/DgCiyfxFKg3/",
-      "tiktok_stats": {
-        "at": "18:48",
-        "views": 142200,
-        "likes": 3065,
-        "shares": 582,
-        "saves": 358,
-        "comments": 22
-      }
-    },
-    {
-      "date": "2026-11-22",
-      "time": "18:30",
-      "title": "Eray, Deniz Aksoy yanındayken GTA 6'da kulübe gitmeye UTANDI 😂",
-      "streamer": "Eray",
-      "status": "kullanıcı paylaşacak",
-      "kick_clip": "vod 139338251 @16378s",
-      "platform": "TikTok + Instagram (kullanıcı)"
-    },
-    {
-      "date": "2026-11-22",
-      "time": "21:00",
-      "title": "Deniz Aksoy Eray'ın burcunu yorumladı, Eray konuyu değiştirdi 😂",
-      "streamer": "Eray",
-      "status": "kullanıcı paylaşacak",
-      "kick_clip": "vod 139338251 @17588s",
-      "platform": "TikTok + Instagram (kullanıcı)"
-    }
-  ],
-  "analyst": [
-    "🚀 Deniz Aksoy araba klibi TikTok'ta 7,5 saatte 142.200 izlenme, 3.065 beğeni, 582 paylaşım, 358 kaydetme.",
-    "Paylaşım/beğeni oranı 1/4 — ünlü konuk + Eray + GTA 6 kombinasyonu en güçlü format.",
-    "Instagram'da aynı klip %79 izlenme, %15 geçme: 24 sn olsa da sonuna kadar izleniyor.",
-    "Ünlü konuklu yayınlar öncelikli kaynak; açıklamalar kısa, tek satır + soru + #yayındankesitler."
-  ],
-  "tiktok": [
-    {
-      "t": "2026-11-21 10:30",
-      "followers": 1,
-      "likes": 163,
-      "videos": 6
-    },
-    {
-      "t": "2026-11-22 18:48",
-      "followers": 43,
-      "likes": null,
-      "videos": null
-    }
-  ],
-  "tiktok_videos": [
-    {
-      "t": "2026-11-21 10:35",
-      "title": "Eray GTA 6 oynarken Lucia'ya gerçekten AŞIK OLDU 😭",
-      "age_h": 19,
-      "len_s": 11,
-      "views": 7014,
-      "likes": 25,
-      "comments": 0,
-      "shares": 5,
-      "saves": 5,
-      "new_followers": 1,
-      "avg_watch_s": 6.8,
-      "full_watch_pct": 25.43,
-      "avg_pct": 61,
-      "drop_at": "0:01",
-      "traffic": {
-        "search": 86.8,
-        "foryou": 12.7,
-        "profile": 0.3
-      },
-      "audience": {
-        "male": 49,
-        "female": 50,
-        "18-24": 44,
-        "25-34": 41,
-        "TR": 92.4,
-        "AZ": 4.9
-      }
-    },
-    {
-      "t": "2026-11-21 10:38",
-      "title": "SercanZurna POLİSTEN KAÇIYOR AMA...",
-      "posted": "2026-11-20 23:48",
-      "age_h": 11,
-      "len_s": 21,
-      "views": 1515,
-      "likes": 23,
-      "comments": 0,
-      "shares": 0,
-      "saves": 1,
-      "new_followers": 0,
-      "avg_watch_s": 11.0,
-      "full_watch_pct": 29.63,
-      "avg_pct": 52,
-      "drop_at": "0:01",
-      "traffic": {
-        "foryou": 98.5,
-        "search": 0.9,
-        "profile": 0.6
-      },
-      "curve": "zirve paylaşımdan ~1-2 saat sonra (~1.1K/saat), 4. saatten sonra durdu"
-    }
-  ],
-  "instagram": [
-    {
-      "code": "DgBCk9VAKCs",
-      "title": "wtcN GTA 6'da \"seremoni yapalım\" deyip çatıdan ATLADI… sonuç: WASTED 😭",
-      "views": 337,
-      "watched": 63.4,
-      "skip": 38.6,
-      "shares": 0,
-      "saves": 0,
-      "dur": 12,
-      "url": "https://www.instagram.com/reel/DgBCk9VAKCs/"
-    },
-    {
-      "code": "DgAxX1PEzRP",
-      "title": "Hype GTA 6'da \"hayırlı bir iş için\" arabaya el koydu, kadın PANİK ATAK geçirdi 😭",
-      "views": 692,
-      "watched": 52.0,
-      "skip": 30.4,
-      "shares": 1,
-      "saves": 1,
-      "dur": 21,
-      "url": "https://www.instagram.com/reel/DgAxX1PEzRP/"
-    },
-    {
-      "code": "DgAjkKcjTI8",
-      "title": "Eray GTA 6 yayınında havuzdaki KAOSU izleyince GÜLMEKTEN YARILDILAR 😂",
-      "views": 563,
-      "watched": 85.3,
-      "skip": 18.4,
-      "shares": 0,
-      "saves": 0,
-      "dur": 13,
-      "url": "https://www.instagram.com/reel/DgAjkKcjTI8/"
-    },
-    {
-      "code": "Df_zeT_D3Ty",
-      "title": "Eray GTA 6 oynarken yayın evini ÖZEL HAREKAT kılıklı ekip BASTI 😳",
-      "views": 212,
-      "watched": 70.4,
-      "skip": 24.7,
-      "shares": 0,
-      "saves": 1,
-      "dur": 16,
-      "url": "https://www.instagram.com/reel/Df_zeT_D3Ty/"
-    },
-    {
-      "code": "Df-ie-OoLvV",
-      "title": "SercanZurna POLİSTEN KAÇIYOR AMA...",
-      "views": 267,
-      "watched": 58.6,
-      "skip": 29.4,
-      "shares": 0,
-      "saves": 0,
-      "dur": 21,
-      "url": "https://www.instagram.com/reel/Df-ie-OoLvV/"
-    },
-    {
-      "code": "Df9j2OeIE9v",
-      "title": "Eray resmen Lucia'ya kapıldı: \"Hırçın kadınları severim!\" 😂",
-      "views": 2040,
-      "watched": 73.8,
-      "skip": 22.2,
-      "shares": 5,
-      "saves": 2,
-      "dur": 11,
-      "url": "https://www.instagram.com/reel/Df9j2OeIE9v/"
-    },
-    {
-      "code": "Df9M25nIKU7",
-      "title": "Uzi GTA 6'da arabadan atlamaya karar verdi… sonuç tam bir felaket 😭",
-      "views": 319,
-      "watched": 76.3,
-      "skip": 27.5,
-      "shares": 1,
-      "saves": 1,
-      "dur": 12,
-      "url": "https://www.instagram.com/reel/Df9M25nIKU7/"
-    },
-    {
-      "code": "Df8A7hQzaSD",
-      "title": "RRaenee: Polis çağrılıyor, komşu karşılık veriyor ve her şey kaosa dönüyor 😂",
-      "views": 168,
-      "watched": 27.1,
-      "skip": 37.5,
-      "shares": 0,
-      "saves": 0,
-      "dur": 56,
-      "url": "https://www.instagram.com/reel/Df8A7hQzaSD/"
-    },
-    {
-      "code": "Df70DgMotUt",
-      "title": "Eray: Adam karakterden hiç çıkmıyor, GTA'da beraber yarıştıklarını iddia ediyor 😂",
-      "views": 248,
-      "watched": 13.8,
-      "skip": 42.6,
-      "shares": 0,
-      "saves": 0,
-      "dur": 56,
-      "url": "https://www.instagram.com/reel/Df70DgMotUt/"
-    }
-  ],
-  "instagram_at": "22.11 08:55"
+ "updated": "2026-11-22 18:48",
+ "slots": [
+  "13:00",
+  "18:30",
+  "20:30",
+  "23:00"
+ ],
+ "posts": [
+  {
+   "time": "11:52",
+   "title": "Eray GTA 6 oynarken yayın evini ÖZEL HAREKAT kılıklı ekip BASTI 😳",
+   "streamer": "Eray",
+   "status": "published",
+   "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710539133172698388",
+   "instagram": "https://www.instagram.com/reel/Df_zeT_D3Ty/",
+   "kick_clip": "clip_01M7X5S5DVDB21E21NCEWJEYNT",
+   "date": "2026-11-21"
+  },
+  {
+   "time": "18:30",
+   "title": "Eray GTA 6 yayınında havuzdaki KAOSU izleyince GÜLMEKTEN YARILDILAR 😂",
+   "streamer": "Eray",
+   "status": "published",
+   "kick_clip": "clip_01M7YFN4G4XFRA91E98J568WY2",
+   "instagram": "https://www.instagram.com/reel/DgAjkKcjTI8/",
+   "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710647453460057365",
+   "date": "2026-11-21"
+  },
+  {
+   "time": "20:30",
+   "title": "Hype GTA 6'da \"hayırlı bir iş için\" arabaya el koydu, kadın PANİK ATAK geçirdi 😭",
+   "streamer": "Hype",
+   "status": "scheduled",
+   "kick_clip": "clip_01M7XBF0M3P0G0WKEC8DTG0G1S",
+   "date": "2026-11-21"
+  },
+  {
+   "time": "23:00",
+   "title": "IShowSpeed OVERWROTE His 100% GTA 6 Save After 50 HOURS 😭",
+   "streamer": "IShowSpeed",
+   "status": "scheduled",
+   "platform": "YouTube",
+   "youtube": "https://www.youtube.com/watch?v=mOieuBrIMy4",
+   "date": "2026-11-21"
+  },
+  {
+   "time": "23:00",
+   "title": "wtcN GTA 6'da \"seremoni yapalım\" deyip çatıdan ATLADI… sonuç: WASTED 😭",
+   "streamer": "wtcN",
+   "status": "scheduled",
+   "kick_clip": "clip_01M7Z90C70S4KW4FREW798V84Q",
+   "date": "2026-11-21"
+  },
+  {
+   "date": "2026-11-22",
+   "time": "13:00",
+   "title": "Eray Deniz Aksoy yanındayken GTA 6'da araba sürmeye çalıştı 😅",
+   "streamer": "Eray",
+   "status": "published",
+   "platform": "Instagram (Claude) + TikTok (kullanıcı)",
+   "kick_clip": "vod 139338251 @16263s",
+   "tiktok": "https://www.tiktok.com/@raynaxclips/video/7710906492999716097",
+   "instagram": "https://www.instagram.com/reel/DgCiyfxFKg3/",
+   "tiktok_stats": {
+    "at": "18:48",
+    "views": 142200,
+    "likes": 3065,
+    "shares": 582,
+    "saves": 358,
+    "comments": 22
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "time": "18:30",
+   "title": "Eray, Deniz Aksoy yanındayken GTA 6'da kulübe gitmeye UTANDI 😂",
+   "streamer": "Eray",
+   "status": "kullanıcı paylaşacak",
+   "kick_clip": "vod 139338251 @16378s",
+   "platform": "TikTok + Instagram (kullanıcı)"
+  },
+  {
+   "date": "2026-11-22",
+   "time": "21:00",
+   "title": "Deniz Aksoy Eray'ın burcunu yorumladı, Eray konuyu değiştirdi 😂",
+   "streamer": "Eray",
+   "status": "kullanıcı paylaşacak",
+   "kick_clip": "vod 139338251 @17588s",
+   "platform": "TikTok + Instagram (kullanıcı)"
+  },
+  {
+   "date": "2026-11-23",
+   "time": "13:00",
+   "title": "Eray'ın yayınında TORPİL patladı, Berkcan Güven ve ekip gülmekten yerlere yattı 😂",
+   "streamer": "Eray",
+   "status": "kullanıcı paylaşacak",
+   "kick_clip": "vod 139564279 @23318s",
+   "platform": "TikTok + Instagram (kullanıcı)"
+  },
+  {
+   "date": "2026-11-23",
+   "time": "18:30",
+   "title": "Berkcan Güven chat'in sorusunu Eray'a sordu, ortam bir anda dondu 😂",
+   "streamer": "Eray",
+   "status": "kullanıcı paylaşacak",
+   "kick_clip": "vod 139564279 @27949s",
+   "platform": "TikTok + Instagram (kullanıcı)"
+  },
+  {
+   "date": "2026-11-23",
+   "time": "21:00",
+   "title": "Berkcan Güven yayından ayrılırken ekip ayakta alkışladı 👏",
+   "streamer": "Eray",
+   "status": "kullanıcı paylaşacak",
+   "kick_clip": "vod 139564279 @29211s",
+   "platform": "TikTok + Instagram (kullanıcı)"
+  }
+ ],
+ "analyst": [
+  "🚀 Deniz Aksoy araba klibi TikTok'ta 7,5 saatte 142.200 izlenme, 3.065 beğeni, 582 paylaşım, 358 kaydetme.",
+  "Paylaşım/beğeni oranı 1/4 — ünlü konuk + Eray + GTA 6 kombinasyonu en güçlü format.",
+  "Instagram'da aynı klip %79 izlenme, %15 geçme: 24 sn olsa da sonuna kadar izleniyor.",
+  "Ünlü konuklu yayınlar öncelikli kaynak; açıklamalar kısa, tek satır + soru + #yayındankesitler."
+ ],
+ "tiktok": [
+  {
+   "t": "2026-11-21 10:30",
+   "followers": 1,
+   "likes": 163,
+   "videos": 6
+  },
+  {
+   "t": "2026-11-22 18:48",
+   "followers": 43,
+   "likes": null,
+   "videos": null
+  }
+ ],
+ "tiktok_videos": [
+  {
+   "t": "2026-11-21 10:35",
+   "title": "Eray GTA 6 oynarken Lucia'ya gerçekten AŞIK OLDU 😭",
+   "age_h": 19,
+   "len_s": 11,
+   "views": 7014,
+   "likes": 25,
+   "comments": 0,
+   "shares": 5,
+   "saves": 5,
+   "new_followers": 1,
+   "avg_watch_s": 6.8,
+   "full_watch_pct": 25.43,
+   "avg_pct": 61,
+   "drop_at": "0:01",
+   "traffic": {
+    "search": 86.8,
+    "foryou": 12.7,
+    "profile": 0.3
+   },
+   "audience": {
+    "male": 49,
+    "female": 50,
+    "18-24": 44,
+    "25-34": 41,
+    "TR": 92.4,
+    "AZ": 4.9
+   }
+  },
+  {
+   "t": "2026-11-21 10:38",
+   "title": "SercanZurna POLİSTEN KAÇIYOR AMA...",
+   "posted": "2026-11-20 23:48",
+   "age_h": 11,
+   "len_s": 21,
+   "views": 1515,
+   "likes": 23,
+   "comments": 0,
+   "shares": 0,
+   "saves": 1,
+   "new_followers": 0,
+   "avg_watch_s": 11.0,
+   "full_watch_pct": 29.63,
+   "avg_pct": 52,
+   "drop_at": "0:01",
+   "traffic": {
+    "foryou": 98.5,
+    "search": 0.9,
+    "profile": 0.6
+   },
+   "curve": "zirve paylaşımdan ~1-2 saat sonra (~1.1K/saat), 4. saatten sonra durdu"
+  }
+ ],
+ "instagram": [
+  {
+   "code": "DgBCk9VAKCs",
+   "title": "wtcN GTA 6'da \"seremoni yapalım\" deyip çatıdan ATLADI… sonuç: WASTED 😭",
+   "views": 337,
+   "watched": 63.4,
+   "skip": 38.6,
+   "shares": 0,
+   "saves": 0,
+   "dur": 12,
+   "url": "https://www.instagram.com/reel/DgBCk9VAKCs/"
+  },
+  {
+   "code": "DgAxX1PEzRP",
+   "title": "Hype GTA 6'da \"hayırlı bir iş için\" arabaya el koydu, kadın PANİK ATAK geçirdi 😭",
+   "views": 692,
+   "watched": 52.0,
+   "skip": 30.4,
+   "shares": 1,
+   "saves": 1,
+   "dur": 21,
+   "url": "https://www.instagram.com/reel/DgAxX1PEzRP/"
+  },
+  {
+   "code": "DgAjkKcjTI8",
+   "title": "Eray GTA 6 yayınında havuzdaki KAOSU izleyince GÜLMEKTEN YARILDILAR 😂",
+   "views": 563,
+   "watched": 85.3,
+   "skip": 18.4,
+   "shares": 0,
+   "saves": 0,
+   "dur": 13,
+   "url": "https://www.instagram.com/reel/DgAjkKcjTI8/"
+  },
+  {
+   "code": "Df_zeT_D3Ty",
+   "title": "Eray GTA 6 oynarken yayın evini ÖZEL HAREKAT kılıklı ekip BASTI 😳",
+   "views": 212,
+   "watched": 70.4,
+   "skip": 24.7,
+   "shares": 0,
+   "saves": 1,
+   "dur": 16,
+   "url": "https://www.instagram.com/reel/Df_zeT_D3Ty/"
+  },
+  {
+   "code": "Df-ie-OoLvV",
+   "title": "SercanZurna POLİSTEN KAÇIYOR AMA...",
+   "views": 267,
+   "watched": 58.6,
+   "skip": 29.4,
+   "shares": 0,
+   "saves": 0,
+   "dur": 21,
+   "url": "https://www.instagram.com/reel/Df-ie-OoLvV/"
+  },
+  {
+   "code": "Df9j2OeIE9v",
+   "title": "Eray resmen Lucia'ya kapıldı: \"Hırçın kadınları severim!\" 😂",
+   "views": 2040,
+   "watched": 73.8,
+   "skip": 22.2,
+   "shares": 5,
+   "saves": 2,
+   "dur": 11,
+   "url": "https://www.instagram.com/reel/Df9j2OeIE9v/"
+  },
+  {
+   "code": "Df9M25nIKU7",
+   "title": "Uzi GTA 6'da arabadan atlamaya karar verdi… sonuç tam bir felaket 😭",
+   "views": 319,
+   "watched": 76.3,
+   "skip": 27.5,
+   "shares": 1,
+   "saves": 1,
+   "dur": 12,
+   "url": "https://www.instagram.com/reel/Df9M25nIKU7/"
+  },
+  {
+   "code": "Df8A7hQzaSD",
+   "title": "RRaenee: Polis çağrılıyor, komşu karşılık veriyor ve her şey kaosa dönüyor 😂",
+   "views": 168,
+   "watched": 27.1,
+   "skip": 37.5,
+   "shares": 0,
+   "saves": 0,
+   "dur": 56,
+   "url": "https://www.instagram.com/reel/Df8A7hQzaSD/"
+  },
+  {
+   "code": "Df70DgMotUt",
+   "title": "Eray: Adam karakterden hiç çıkmıyor, GTA'da beraber yarıştıklarını iddia ediyor 😂",
+   "views": 248,
+   "watched": 13.8,
+   "skip": 42.6,
+   "shares": 0,
+   "saves": 0,
+   "dur": 56,
+   "url": "https://www.instagram.com/reel/Df70DgMotUt/"
+  }
+ ],
+ "instagram_at": "22.11 08:55"
 }

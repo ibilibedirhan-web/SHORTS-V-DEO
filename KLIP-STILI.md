@@ -126,3 +126,4 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
   `ffmpeg -ss <vod_starts_at-5> -t 70`. Klibi soruyla başlat, tepkiyle bitir.
 - 2026-11-21 · Kitle %50 kadın, 18-34 yaş, %92 Türkiye: ilişki/drama/Lucia hikâyeleri ve RRaenee iyi gider.
 - Torpil/havai fişek/patlayıcı gibi tehlikeli hareket içeren klipleri SEÇME: torpil klibi (23.11 12:00) 4 saatte 377 izlenmede kaldı, aynı hafta konuklu oyun klipleri 190-330K yaptı. TikTok bu tür içeriği önermeyebilir.
+- 2026-11-23 · Komik an bulma yöntemi: Kick VOD sohbet kaydı (api/v2/channels/<id>/messages?start_time=ISO, 5 sn'lik sayfalar) → KEKW/LULW/klavye ezme yoğunluğunu 20 sn pencerelerde say; chat yayını ~5 sn geriden izliyor, an = zirve - 5 sn. Zirvenin 20-25 sn öncesinden kes.

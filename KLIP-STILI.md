@@ -125,3 +125,4 @@ spec alanları: name, src, start, end, cam [x,y,w,h] **veya "auto"**, lang, titl
   yoksa VOD'dan devamını al: `api/v2/clips/<id>` → `vod_starts_at` + `vod.id`, `api/v1/video/<vod.id>` → `source` m3u8,
   `ffmpeg -ss <vod_starts_at-5> -t 70`. Klibi soruyla başlat, tepkiyle bitir.
 - 2026-11-21 · Kitle %50 kadın, 18-34 yaş, %92 Türkiye: ilişki/drama/Lucia hikâyeleri ve RRaenee iyi gider.
+- Torpil/havai fişek/patlayıcı gibi tehlikeli hareket içeren klipleri SEÇME: torpil klibi (23.11 12:00) 4 saatte 377 izlenmede kaldı, aynı hafta konuklu oyun klipleri 190-330K yaptı. TikTok bu tür içeriği önermeyebilir.

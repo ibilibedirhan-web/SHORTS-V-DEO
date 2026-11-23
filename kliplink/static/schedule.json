@@ -91,13 +91,21 @@
   },
   {
    "date": "2026-11-23",
-   "time": "21:00",
+   "time": "12:00",
    "title": "Eray'ın yayınında TORPİL patladı, Berkcan Güven ve ekip gülmekten yerlere yattı 😂",
    "streamer": "Eray",
-   "status": "kullanıcı paylaşacak",
+   "status": "kullanıcı paylaştı",
    "kick_clip": "vod 139564279 @23318s",
    "platform": "TikTok + Instagram (kullanıcı)",
-   "note": "ses düzeltildi (bip sonrası kesiliyordu)"
+   "note": "ses düzeltildi (bip sonrası kesiliyordu)",
+   "url": "https://www.tiktok.com/@raynaxclips/video/7711274160432876820",
+   "stats": {
+    "at": "23.11 15:57",
+    "views": 377,
+    "likes": 4,
+    "shares": 0,
+    "comments": 0
+   }
   },
   {
    "date": "2026-11-23",
@@ -136,6 +144,12 @@
    "followers": 43,
    "likes": null,
    "videos": null
+  },
+  {
+   "t": "2026-11-23 15:57",
+   "followers": 91,
+   "likes": 12800,
+   "videos": 10
   }
  ],
  "tiktok_videos": [
